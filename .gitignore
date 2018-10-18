@@ -31,6 +31,7 @@ gradlew.bat
 
 # tool
 .vscode
+.vagrant
 
 # some local files
 */.DS_Store
@@ -44,6 +45,9 @@ unused.txt
 # language
 	## go
 vendor/
+	## python
+*__pycache__/
+*.pyc
 
 # Generated files
 build/
@@ -61,3 +65,4 @@ gen/
 out/
 log/
 output/
+download/
