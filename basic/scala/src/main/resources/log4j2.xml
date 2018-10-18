@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<Configuration status="warn">  
+	
+	<properties>  
+        <property name="LOG_HOME">./logs</property>  
+        <property name="FILE_NAME">roll</property>  
+    </properties> 
+    
+    <Appenders>  
+        <Console name="Console" target="SYSTEM_OUT">  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />  
+        </Console>
+        
+        <File name="file_log" fileName="${LOG_HOME}/file.log">  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />  
+        </File>    
+        
+        <RollingRandomAccessFile name="roll_log"
+            fileName="${LOG_HOME}/${FILE_NAME}.log"  
+            filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd HH-mm}-%i.log">  
+            <PatternLayout  
+                pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />  
+            <Policies>  
+                <TimeBasedTriggeringPolicy interval="100" />  
+                <SizeBasedTriggeringPolicy size="10 K" />  
+            </Policies>  
+            <DefaultRolloverStrategy max="5" />  
+        </RollingRandomAccessFile>  
+        
+           
+        <RollingRandomAccessFile name="error_log"
+            fileName="${LOG_HOME}/error.log"  
+            filePattern="${LOG_HOME}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">  
+            
+	            <Filters>  
+	                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL" />  
+	                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" />  
+	            </Filters>  
+	            
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />  
+            <Policies>  
+                <TimeBasedTriggeringPolicy interval="100" /> 
+                <SizeBasedTriggeringPolicy size="10 K" />  
+            </Policies>  
+            <DefaultRolloverStrategy max="5" />  
+        </RollingRandomAccessFile>  
+        
+        <Async name="async_log">  
+            <AppenderRef ref="file_log" />  
+        </Async>
+   
+    </Appenders>  
+    <Loggers>  
+      	
+      	<Logger name="console" level="debug" additivity="false">  
+        	<AppenderRef ref="Console" />  
+    	</Logger> 
+    	
+      	<Logger name="file" level="debug" additivity="false">  
+        	<AppenderRef ref="file_log" />  
+    	</Logger>  
+    	   
+    	<Logger name="roll" level="debug" additivity="false">  
+        	<AppenderRef ref="roll_log" />  
+    	</Logger>  
+    	
+    	<Logger name="filter" level="debug" additivity="false">  
+        	<AppenderRef ref="error_log" />   
+        	<AppenderRef ref="file_log" />
+    	</Logger>  
+    	
+    	<Logger name="async" level="debug" additivity="false">  
+        	<AppenderRef ref="async_log" />  
+    	</Logger>  
+
+        <Root level="info">  
+            <AppenderRef ref="Console" />  
+        </Root>  
+    </Loggers>  
+</Configuration>  

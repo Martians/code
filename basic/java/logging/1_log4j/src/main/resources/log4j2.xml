@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 不重启程序，动态修改配置：
+        设置 monitorInterval， 每300s自动读取配置 -->
+<Configuration status="INFO" monitorInterval="300">
+
+    <!-- 定义全局的宏变量 -->
+	<properties>  
+        <property name="LOGS_PATH">./logs_log4j</property>
+        <property name="ROLL_FILE">roll</property>  
+    </properties>
+
+    <!-- 这里标签名，决定了输出的class，如：Console、File、RollingRandomAccessFile -->
+    <Appenders>
+        <!-- 控制台输出
+                %logger会输出logger的名字 -->
+        <Console name="Console" target="SYSTEM_OUT">  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />  
+        </Console>
+
+        <!-- 文件输出 -->
+        <File name="file_log" fileName="${LOGS_PATH}/file.log">  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />  
+        </File>
+
+        <!-- 按时间、文件大小滚动输出
+                fileNames是当前的日志名字
+                filePattern是roll之后的文件命名规则 -->
+        <RollingRandomAccessFile name="roll_log"
+            fileName="${LOGS_PATH}/${ROLL_FILE}.log"  
+            filePattern="${LOGS_PATH}/$${date:yyyy-MM}/${ROLL_FILE}-%d{yyyy-MM-dd HH-mm}-%i.log">  
+
+            <PatternLayout
+                pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+
+            <Policies>
+                <!-- 这里的时间单位，与 filePattern中的最小时间单位匹配。这里是 mm 即分钟 -->
+                <TimeBasedTriggeringPolicy interval="1" />
+                <SizeBasedTriggeringPolicy size="10 K" />  
+            </Policies>  
+            <DefaultRolloverStrategy max="5" />  
+        </RollingRandomAccessFile>
+
+
+        <!-- 增加filter -->
+        <RollingRandomAccessFile name="error_log"
+            fileName="${LOGS_PATH}/error.log"  
+            filePattern="${LOGS_PATH}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
+
+            <Filters>
+                <!-- 阈值过滤, off > fatal > error > warn > info > debug > trace > all
+                        onMatch, 级别大于等于 level 的处理
+                        onMismatch, 级别小于 level  的处理 -->
+                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+
+            <PatternLayout
+                pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
+
+            <Policies>  
+                <TimeBasedTriggeringPolicy interval="100" /> 
+                <SizeBasedTriggeringPolicy size="10 K" />  
+            </Policies>  
+            <DefaultRolloverStrategy max="5" />  
+        </RollingRandomAccessFile>
+
+        <!-- 异步方式，性能更好
+                需要绑定到其他appender -->
+        <Async name="async_log">  
+            <AppenderRef ref="file_log" />  
+        </Async>
+    </Appenders>
+
+
+    <!--
+        定义loggger和 append的关系
+     -->
+    <Loggers>
+        <!-- root logger 将会输出到 console、file_log -->
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="file_log" />
+        </Root>
+
+        <!-- 新定义一个logger，也与appender进行绑定，只在文件输出 -->
+        <Logger name="test" level="debug" additivity="false">
+            <AppenderRef ref="file_log" />
+        </Logger>
+
+        <!-- 新定义一个logger，additivity = true。
+                除了自己输出，也会到rootLogger中输出一次
+                会在：Console、file_log、error_log 各输出一次 -->
+        <Logger name="test_up" level="debug" additivity="true">
+            <AppenderRef ref="error_log" />
+        </Logger>
+
+        <!-- 仅仅输出到console，可以不定义这个logger -->
+        <Logger name="console" level="debug" additivity="false">
+        	<AppenderRef ref="Console" />  
+    	</Logger> 
+    	
+      	<Logger name="file" level="debug" additivity="false">  
+        	<AppenderRef ref="file_log" />  
+    	</Logger>  
+    	   
+    	<Logger name="roll" level="debug" additivity="false">  
+        	<AppenderRef ref="roll_log" />  
+    	</Logger>  
+    	
+    	<Logger name="filter" level="debug" additivity="false">  
+        	<AppenderRef ref="error_log" />   
+        	<AppenderRef ref="file_log" />
+    	</Logger>
+
+        <!-- 异步方式，性能更好 -->
+    	<Logger name="async" level="debug" additivity="false">  
+        	<AppenderRef ref="async_log" />  
+    	</Logger>
+    </Loggers>
+
+</Configuration>  

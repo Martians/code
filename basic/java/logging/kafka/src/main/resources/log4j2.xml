@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<Configuration status="warn">  
+	
+	<properties>  
+        <property name="LOG_HOME">./logs</property>  
+        <property name="FILE_NAME">roll</property>  
+    </properties> 
+    
+    <Appenders>  
+        <Console name="Console" target="SYSTEM_OUT">  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />  
+        </Console>
+        
+		<Kafka name="kafka_log" topic="test" syncSend="false">
+			<Filters>
+				<ThresholdFilter level="info" onMatch="ACCEPT"
+					onMismatch="DENY" />
+			</Filters>
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n" />
+			<Property name="bootstrap.servers">192.168.36.10:9092</Property>
+			<Property name="buffer.memory">67108864</Property>
+			<Property name="batch.size">8196</Property>
+			<Property name="acks">1</Property>
+		</Kafka>
+
+        
+    </Appenders>  
+    <Loggers>  
+      	   	
+    	<Logger name="kafka" level="debug" additivity="false"> 
+              <AppenderRef ref="kafka_log" />  
+       </Logger>
+
+        <Root level="error">  
+            <AppenderRef ref="Console" />  
+        </Root>  
+    </Loggers>  
+</Configuration>  

@@ -1,0 +1,48 @@
+
+// java compiler
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+// main class
+apply plugin: 'application'
+mainClassName = 'hello.HelloWorld'
+
+// tag::repositories[]
+repositories {
+    mavenCentral()
+}
+// end::repositories[]
+
+// JAR artifact name
+// tag::jar[]
+jar {
+    baseName = 'test-gradle'
+    version =  '0.1.0'
+}
+// end::jar[]
+
+// tag::dependencies[]
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile "joda-time:joda-time:2.2"
+    testCompile "junit:junit:4.12"
+}
+// end::dependencies[]
+
+// tag::wrapper[]
+// end::wrapper[]
+
+
+/*
+## gradle usage
+gradle tasks
+gradle build
+
+## gradle wraper usage
+gradle wrapper --gradle-version 2.13
+./gradlew build
+./gradlew run
+
+*/

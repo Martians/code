@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- logback自身配置
+        scan：自动重新加载配置, 默认时间为1min
+        debug：显示logback内部日志 -->
+<configuration scan="true" scanPeriod="60 second" debug="false">
+
+    <!-- logger的上下文，默认为default；可以在pattern中用 %contextName 显示
+        设置为不同的名字，可以区分不同程序的记录 -->
+    <contextName>myAppName</contextName>
+
+    <!-- 定义变量 -->
+    <property name="LOG_PATH" value="./logs_logback" debug="false"/>
+    <timestamp key="bySecond" datePattern="yyyy-MM-dd HH_mm_ss" />
+
+    <!-- Console，由class来指定具体功能
+        可专门指定target，到 System.out(默认) 或者 System.err-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5level] [%thread] %logger{0} - %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- file log -->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/file.log</file>
+        <!-- append: true,日志被追加到文件结尾; 默认是true -->
+        <append>true</append>
+
+        <!-- 直接level过滤器，只针对相关的level
+            accept：立即处理，不进行传递；neutral: 传递给下一个
+            -->
+        <!--filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter-->
+
+        <!-- ThresholdFilter:临界值过滤器：>= 的执行neutral；< level 的被过滤 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+
+        <!--转换符的说明，102P-->
+        <encoder>
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5level] [%thread] %logger{50} - %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--==============================================================================-->
+    <!--每启动一次，就会生成一个新的日志文件，因为日志文件是不断变化的 -->
+    <!-- file log -->
+    <appender name="startup" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/startup_${bySecond}.log</file>
+        <!-- append: true,日志被追加到文件结尾; 默认是true -->
+        <append>true</append>
+        <encoder>
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5level] [%thread] %logger{50} - %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--==============================================================================-->
+    <!-- 固定size，是之前常用的日志模式 -->
+    <appender name="index_roll" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/index.log</file>
+        <append>true</append>
+
+        <!--当发生滚动时，决定RollingFileAppender的行为，涉及文件移动和重命名-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <!-- 这里文件名，必须带上 %i，不能带时间 -->
+            <fileNamePattern>${LOG_PATH}/index/index.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>3</maxIndex>
+        </rollingPolicy>
+
+        <!--告知 RollingFileAppender 何时激活滚动-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>30KB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <!-- 4relative 是带一个编号？ -->
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5level] [%thread] %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--==============================================================================-->
+    <!-- 按照时间进行的配置 中文手册51 p -->
+    <appender name="time_roll" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--可以设置，也可以不设置file节点-->
+        <file>${LOG_PATH}/time_roll.log</file>
+        <append>true</append>
+
+        <!--当发生滚动时，决定RollingFileAppender的行为，涉及文件移动和重命名-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 这里文件名，使用SimpleDateFormat格式指定的时间格式，默认 %d{yyyy-MM-dd}
+                  https://blog.csdn.net/qq_27093465/article/details/53034427
+                  maxHistory 是按照fileNamePattern里边的最小单位定义-->
+            <fileNamePattern>${LOG_PATH}/time/time_roll_%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+
+        <!--triggeringPolicy决定何时执行-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>10KB</maxFileSize>
+        </triggeringPolicy>
+
+        <encoder>
+            <!-- 4relative 是带一个编号？ -->
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5level] [%thread] %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--==============================================================================-->
+    <!-- 基于时间和大小 -->
+    <appender name="size_time_roll" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/size_time.log</file>
+        <encoder>
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5level] [%thread] %logger{0} - %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <!--TimeBasedRollingPolicy 同时实现了 RollingPolicy 接口和 TriggeringPolicy 接口，所以这里一起设置即可 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 这里文件名，必须带上 %i 和 时间 -->
+            <fileNamePattern>${LOG_PATH}/size_time/size_time-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--保存10天数据，每个文件最大10K，整个大小900K-->
+            <maxHistory>10</maxHistory>
+            <maxFileSize>10KB</maxFileSize>
+            <totalSizeCap>900KB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name ="async" class= "ch.qos.logback.classic.AsyncAppender">
+        <!-- 设置为不丢失日志；默认：队列的80%已满，丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>512</queueSize>
+        <appender-ref ref ="file"/>
+    </appender>
+
+    <!--==============================================================================-->
+    <!--使用mdc鉴别器，写入到不同的位置
+        这里嵌套配置了其他appender -->
+    <appender name="sift"
+              class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <Key>userid</Key>
+            <DefaultValue>unknown</DefaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${userid}"
+                      class="ch.qos.logback.core.FileAppender">
+                <File>${LOG_PATH}/sift/${userid}.log</File>
+                <Append>true</Append>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <Pattern>%d [%thread] %level {%mdc} --%X{last}-- %logger{35}
+                        - %msg%n
+                    </Pattern>
+                </layout>
+            </appender>
+        </sift>
+    </appender>
+
+
+    <root level="DEBUG">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </root>
+
+    <!--可以设定某个包或者类的日志级别，通过name设置-->
+    <logger name="startup" level="TRACE" additivity="false">
+        <appender-ref ref="startup" />
+    </logger>
+
+    <logger name="time_roll" level="TRACE" additivity="false">
+        <appender-ref ref="console" />
+        <appender-ref ref="time_roll" />
+    </logger>
+    <logger name="index_roll" level="TRACE" additivity="false">
+        <appender-ref ref="console" />
+        <appender-ref ref="index_roll" />
+    </logger>
+
+    <logger name="size_time_roll" level="TRACE" additivity="false">
+        <appender-ref ref="size_time_roll" />
+    </logger>
+
+    <logger name="async" level="TRACE" additivity="false">
+        <appender-ref ref="async" />
+    </logger>
+
+    <logger name="sift" level="TRACE" additivity="false">
+        <appender-ref ref="console" />
+        <appender-ref ref="sift" />
+    </logger>
+</configuration>

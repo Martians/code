@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--是否定期读取配置，以及检查时间-->
+http://blog.csdn.net/gebitan505/article/details/70142155?locationNum=1&fps=1
+
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>logback-demo</contextName>
+    <!--输出到控制台 ConsoleAppender-->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <!--展示格式 layout-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </pattern>
+        </layout>
+    </appender>
+    <!--指定最基础的日志输出级别-->
+    <root level="INFO">
+        <!--appender将会添加到这个loger-->
+        <!--appender-ref ref="consoleLog"/-->
+    </root>
+</configuration>

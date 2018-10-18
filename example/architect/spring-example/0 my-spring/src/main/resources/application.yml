@@ -1,0 +1,74 @@
+
+util.settings.address: abcde
+
+# 使用配置属性；命令行设置；修改环境变量（LOG_FILE_MAX_SIZE）
+# https://www.cnblogs.com/bigben0123/p/7895696.html
+logging:
+  file: log/current.log
+  # path:
+  # file.max-size:
+  # file.max-history:
+  level:
+    root: INFO
+    com.data: DEBUG
+    com.data.testinfo: ERROR
+    #org.springframework.web: DEBUG
+    #org.hibernate: ERROR
+
+# 默认在dev配置下运行
+spring:
+  profiles.default: dev
+  profiles.active: dev
+  #profiles.active: product
+
+---
+spring:
+  profiles: dev
+  # Hibernate: none, update, create, create-drop; 生产环境应该保持默认值：none
+  jpa:
+    hibernate.ddl-auto: create
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+  datasource:
+    url: jdbc:mysql://192.168.36.91:3306/db_example
+    username: long
+    password: 111111
+    # driver-class-name: com.mysql.jdbc.Driver
+
+# 开启直接功能通过web访问管理功能
+management:
+  security.enabled: false
+
+---
+spring:
+  profiles: test
+
+logging:
+  level:
+    root: ERROR
+---
+spring:
+  profiles: product
+
+## 这里还是设置在 全局 配置中，不属于某一个 Profile
+---
+test:
+  product_sale: >
+    {
+      "currentpage": 0,
+      "pagesize": 2,
+      "filter": {
+        "name": "商品",
+        "asin": "B01MS7YV9W",
+        "userId": "用户id",
+        "shops": [
+          {
+            "shopid": "1",
+            "shopname": "3rd Rhino"
+          },
+          {
+            "shopid": "2",
+            "shopname": "店铺B"
+          }
+        ]
+      }
+    }
