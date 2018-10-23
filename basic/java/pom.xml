@@ -27,6 +27,11 @@
 		</dependency>
 	</dependencies>
 
+    <!--maven相关-->
+    <!--https://www.cnblogs.com/selier/p/9510326.html-->
+    <!--https://blog.csdn.net/defonds/article/details/43233131-->
+    <!--https://www.cnblogs.com/flowerbirds/p/6268663.html-->
+    <!--https://blog.csdn.net/CristianTang/article/details/81773387-->
 	<build>
 		<plugins>
 			<!-- maven compiler -->

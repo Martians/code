@@ -5,6 +5,13 @@ import com.data.a0_util.format.CollectionF;
 
 import static com.data.a0_util.format.Display.out;
 
+/**
+ * reflect of subclass
+ *      https://coderanch.com/t/326148/java/reflection-static-classes
+ *      https://stackoverflow.com/questions/33001685/calling-method-from-private-static-nested-class
+ *      http://wiki.c2.com/?ReflectionOnInnerClasses
+ *      https://stackoverflow.com/questions/21078634/java-reflection-invoke-function-in-a-inner-static-class
+ */
 public class A5_Runtime {
     static int value = 100;
 
