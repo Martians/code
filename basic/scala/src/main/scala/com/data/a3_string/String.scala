@@ -1,4 +1,4 @@
-package com.data
+package com.data.a3_string
 
 object String {
 

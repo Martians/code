@@ -1,7 +1,9 @@
-package com.data
+package com.data.a1_common
 
-http://docs.scala-lang.org/zh-cn/overviews/core/string-interpolation.html
-object BaseType {
+/**
+  *
+  */
+object a1_basetype {
 
   def operate_primary() = {
     val a = 1
@@ -107,6 +109,3 @@ object BaseType {
 
   }
 }
-
-
-

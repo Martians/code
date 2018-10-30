@@ -1,6 +1,6 @@
-package com.data
+package com.data.a1_common
 
-object Syntax {
+object a2_syntax {
 
   def syntax_operator() = {
 
@@ -215,11 +215,7 @@ object Syntax {
   }
 
   def syntax_package(): Unit = {
-    import java.util._
-    import java.util.{Formatter, HashMap}
-    import java.util.{Formatter => NewFormat, HashMap}
-    import java.util.{Formatter => NewFormat, _}  // 重命名 Formatter
-    import java.util.{Formatter => _, _}          // 排除 Formatter
+    import java.util.{Formatter => _}          // 排除 Formatter
   }
 
 
@@ -235,6 +231,3 @@ object Syntax {
     syntax_package()
   }
 }
-
-
-

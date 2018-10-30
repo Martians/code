@@ -1,10 +1,15 @@
-package com.data
-
-import com.sun.xml.internal.bind.v2.model.core.TypeRef
+package com.data.a2_class
 
 
+/**
+  * 一个Scala源文件中可以有多个类
+  *
+  * 类定义可以有参数，称为类参数，相当于定义了类成员
+  *
+  * override val xc 为重写了父类的字段。
+  */
 // 虽然这里很多类都写在一起，但是编译后会生成多个文件
-object Class {
+object jClass {
 
   //http://hongjiang.info/scala-type-and-class/
   //http://blog.csdn.net/a2011480169/article/details/52960101

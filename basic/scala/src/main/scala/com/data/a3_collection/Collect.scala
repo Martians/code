@@ -1,5 +1,8 @@
-package com.data
+package com.data.a3_collection
 
+/**
+  * 分成可变集合、不可变集合
+  */
 object Collect {
 
   // list 相当于stack
