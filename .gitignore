@@ -64,5 +64,7 @@ lib/
 gen/
 out/
 log/
+temp/
+tmp/
 output/
 download/

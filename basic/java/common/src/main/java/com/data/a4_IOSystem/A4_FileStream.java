@@ -214,7 +214,7 @@ public class A4_FileStream {
 
         fileOutput();
 
-         randomAccess();
+        randomAccess();
 
     }
 }
