@@ -11,6 +11,9 @@ import static com.data.a0_util.format.Display.out;
  *      https://stackoverflow.com/questions/33001685/calling-method-from-private-static-nested-class
  *      http://wiki.c2.com/?ReflectionOnInnerClasses
  *      https://stackoverflow.com/questions/21078634/java-reflection-invoke-function-in-a-inner-static-class
+ *
+ *  获得类名
+ *      ret.getClass().getSimpleName()
  */
 public class A5_Runtime {
     static int value = 100;
