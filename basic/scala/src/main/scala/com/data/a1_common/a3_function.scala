@@ -9,4 +9,7 @@ package com.data.a1_common
   */
 class a3_function {
 
+    /**
+      * 如果是队规函数，那么函数返回值必须指定
+      */
 }
