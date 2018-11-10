@@ -7,61 +7,54 @@ package com.data.a2_class
   * 类定义可以有参数，称为类参数，相当于定义了类成员
   *
   * override val xc 为重写了父类的字段。
+  *
+  * 不可变对象的优势：P62
+  *     优势：更容易理解；自由传递：线程安全、Hash表安全
+  *     劣势：如果对象很大复制就很慢；而可变对象的更改在原址发生
+  *
+  *
   */
-// 虽然这里很多类都写在一起，但是编译后会生成多个文件
-object jClass {
-
-  //http://hongjiang.info/scala-type-and-class/
-  //http://blog.csdn.net/a2011480169/article/details/52960101
-  //http://blog.csdn.net/sinat_25306771/article/details/52004355
-  def class_runtime(): Unit = {
-    case class AType(d: Int)
-
-    val a = new AType(1)
-    println(a.getClass())
-    println(classOf[AType])
-
-
-    val x = Array[String]()
-    println("cury: " + x.getClass)
-    println(x.getClass.getSimpleName)
-    println(x.asInstanceOf[AnyRef].getClass.getSimpleName)
-    println(classOf[Array[String]])
-/*
-    import scala.reflect.runtime.universe._
-    import scala.reflect.api.TypeTags
-    def paramInfo[T](x: T)(implicit tag: TypeTag[T]): Unit = {
-      val targs = tag.type match { case TypeRef(_, _, args) => args }
-      println(s"type of $x has type arguments $targs")
-    }
-
-    paramInfo(42)
-    paramInfo(List(1, 2))
-    */
-  }
+object a0_class {
 
   def class_simple() = {
     println("\nclass_simple:")
 
+  /**
+    * 访问权限:
+    *   1. 默认public属性
+    *   2. private 需要显示给出
+    *   3. protected：仅子类可以访问，同一包内的的其他类也无法访问
+    */
     class CheckSum {
-      // 默认public属性
+
       val path = "/home/long"
-      // private 需要显示给出
       private var sum = 0
-      // 仅子类可以访问，同一包内的的其他类也无法访问
       protected var access: Int = 0
 
-      // 函数的定义，必须有一个 =
-      //    没有=的函数定义，返回值必然是Unit；这样就类似于“过程”的定义，为了副作用而执行的方法
+      /**
+        * 函数的定义，必须有一个 =
+        *    没有=的函数定义，返回值必然是Unit；这样就类似于“过程”的定义，为了副作用而执行的方法
+        */
       def add(b: Byte) {
         sum += b
       }
 
+      /**
+       * 方法仅计算单个表达式，那么可以去掉花括号
+       */
       def checksum(): Int = ~(sum & 0xFF) + 1
     }
 
-    // 单例对象，此处也是CheckSum的伴生对象，可以访问其私有成员
-    //    每个单例对象，都由一个静态变量指向的虚构来的一个实例来实现，名称为：CheckSum$
+      /**
+        * P 43
+        * 伴生对象（companion object），相当于了singleton
+        *       每个单例对象，都由一个静态变量指向的虚构类的一个实例，名称为：CheckSum$
+        *       没有任何伴生类的伴生对象，成为是独立对象，可以当做程序入口点、实现工具类等
+        *
+        * 是CheckSum的伴生对象，可以访问其私有成员
+        *
+        * 不能带参数构造，不能使用new。
+        */
     object CheckSum {
 
       import scala.collection.mutable.Map
@@ -86,25 +79,38 @@ object jClass {
   def class_normal() = {
     println("\nclass_normal:")
 
-    // 定义为不可变结构
-    //    定义主构造器，这是类的唯一入口点
+  /**
+    * 设计：定义为不可变结构
+    *
+    * 定义主构造器，这是类的唯一入口点
+    *       1. 只有主构造器才能调用超类的构造器
+    *       2. 辅助构造器都需要调用住构造器
+    *
+    *       主构造器定义的成员变量，仅能内部访问；不能从外部引用访问(that: Rational, that.d、that.n 访问失败)
+    *           可以使用参数化字段方式来实现
+    *       类定义中的代码，都将是主构造器的执行代码，包括定义成员变量等
+    */
     class Rational(n: Int, d: Int) {
-      //  先决条件
+      /**
+        * 先决条件，检查主构造器之后的状态
+        */
       require(d != 0)
 
       private val g = gcd(n.abs, d.abs)
-      //  主构造器定义的成员变量，仅能内部访问；不能从外部引用访问(that: Rational, that.d、that.n 访问失败)
-      //      可以使用参数化字段方式来实现
+
       val numer: Int = n / g
       val denom: Int = d / g
 
-      //  定义从构造器
+      /**
+        * 辅助构造器
+        */
       def this(n: Int) = this(n, 1)
 
-      //  ，所有期间语句，都将是主构造器的执行代码，包括定义成员变量等
-      //println("rational: " + n + "/" + d)
+      println("rational: " + n + "/" + d)
 
-      ////////////////////////////////////////////////////////////////
+      /**
+        * 操作符，实际上就只是定义方法
+        */
       def +(that: Rational): Rational = {
         new Rational(numer * that.denom + that.numer * denom, denom * that.denom)
       }
@@ -131,17 +137,18 @@ object jClass {
     println("rational s1 + s2: " + (s1 + s2))
 
     {
-      // 定义隐式转换，只能在当前作用域范围之内，否则无法起作用
-      //   这个将被编译器隐式应用，对程序来说并非显而易见
+    /**
+      * 隐式转换
+      *     1. 带 implicit 关键字，函数名没有要求
+      *     2. 只能在作用域范围之内，否则无法起作用
+      *     3. 这个将被编译器隐式应用，对程序来说并非显而易见；让代码变得难以阅读和理解
+      */
       implicit def intToRational(x: Int) = new Rational(x)
       println("rational s1 + 3: " + (s1 + 3))
       println("rational 3 + s1: " + (3 + s1))
     }
   }
 
-  // 孤立对象
-  object Single {
-  }
 
   // 相当于main，如何执行？？？？
   object SingleApp extends App {
@@ -206,7 +213,6 @@ object jClass {
       class_trait()
 
       if (false) {
-      class_runtime()
 
       class_simple()
 

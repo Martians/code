@@ -4,31 +4,50 @@ object a2_syntax {
 
   def syntax_operator() = {
 
-    // 前缀、中缀、后缀操作符
+      /**
+        * 任何方法都可以是操作符
+        *       方法和操作符，取决于如何使用：s.indexOf(5) -  s indexOf 5
+        *
+        * 前缀、中缀、后缀操作符 P53
+        */
     if (true) {
       println("\nsyntax_operator:")
-      // 中缀操作符，等价于
+    /**
+      * 中缀操作符
+      *     为1的int对象，调用了+方法，参数是Int对象2
+      */
       val x1 = 1 + 2
-      val y1 = (1).+(2) //值为1的int对象，调用了+方法，参数是Int对象2
+      val y1 = (1).+(2) //值
 
+    /**
+      *     任何带参数方法都可以是中缀操作符
+      */
       val s = "it is a good day"
-      val s0 = s indexOf 'a'  //任何带参数方法都可以是中缀操作符
+      val s0 = s indexOf 'a'  //
 
-      // 后缀操作符
+    /**
+      * 后缀操作符
+      */
       val s1 = s.toLowerCase()
       val s2 = s.toLowerCase  //没有副作用，可以不使用()，惯例
       val s3 = s toLowerCase  //方法当后缀做操作符使用
 
-      // 前缀操作符，+-!~，注意，这里没有*；转换为相应的函数调用
+    /**
+      * 前缀操作符
+      *     只有：+ - ! ~ 四种，注意，这里没有*；转换为相应的函数调用 P53
+      */
       val x2 = -0.2
       val y2 = (0.2).unary_-
 
-      // 特例：以：结尾的操作符，由其右侧操作数调用，传入左侧操作数
+    /**
+      * 特例：以：结尾的操作符，由其右侧操作数调用，传入左侧操作数
+      */
       val a = List(1, 2, 3)
       val b = List(4, 5, 6)
       println("list cons a:::b:  " + (a ::: b))
       println("equal - b.:::(a): " +(b.:::(a)))
     }
+
 
     // 对象后跟()，转换方式
     if (true) {
