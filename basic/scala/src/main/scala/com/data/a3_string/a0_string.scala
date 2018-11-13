@@ -5,7 +5,7 @@ package com.data.a3_string
   *
   * 使用原生字符串，第二行不像使用前导空格，就在下一行开头加上|, P51
   */
-object String {
+object a0_string {
 
   def print_string(): Unit = {
     println("\nprint_string:")

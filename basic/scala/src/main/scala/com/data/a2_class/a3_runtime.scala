@@ -1,9 +1,12 @@
 package com.data.a2_class
 
+/**
+  * http://hongjiang.info/scala-type-and-class/
+  * http://blog.csdn.net/a2011480169/article/details/52960101
+  * http://blog.csdn.net/sinat_25306771/article/details/52004355
+  */
 object a3_runtime {
-    //http://hongjiang.info/scala-type-and-class/
-    //http://blog.csdn.net/a2011480169/article/details/52960101
-    //http://blog.csdn.net/sinat_25306771/article/details/52004355
+
     def class_runtime(): Unit = {
         case class AType(d: Int)
 

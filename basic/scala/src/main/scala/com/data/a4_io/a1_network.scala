@@ -1,5 +1,5 @@
 package com.data.a4_io
 
-object Network {
+object a1_network {
 
 }

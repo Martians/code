@@ -5,13 +5,12 @@ package com.data.a1_common
   *
   * 应用程序编写：
   *     1. 常规：编写main方法
-  *     2. 简化:object混入 App 特质接口
-  * 但不可访问命令行参数了；通常只用于简单程序时使用 P45
+  *     2. 简化：object混入 App 特质接口；但不可访问命令行参数了；通常只用于简单程序时使用 P45
   */
 object a1_base extends App {
     /**
       * val：是指变量本身不可改变，但是其指向的对象，内部内容是可以修改的
-      * 仅表示，不可再次赋值
+      *     仅表示，变量不可再次赋值
       */
     def operate_primary() = {
         val a = 1
@@ -27,8 +26,6 @@ object a1_base extends App {
     }
 
     /**
-      * int、Int是一回事儿 P48
-      *
       * 没有int，只有Int
       */
     def operate_type() = {
@@ -42,8 +39,11 @@ object a1_base extends App {
         //    val y: Map[Int, String] = new util.HashMap()
     }
 
+    /**
+      * 变量名覆盖
+      *     在内部范围中，可以定义与内部范围相同的变量名字
+      */
     def operate_scope(): Unit = {
-        // 在内部范围中，可以定义与内部范围相同的变量名字
         val a = 1;
         {
             val a = 2
@@ -55,7 +55,7 @@ object a1_base extends App {
     def syntax_operator() = {
         /**
           * 任何方法都可以是操作符
-          * 使用何种形式，方法和操作符，取决于如何使用：s.indexOf(5)，或者 s indexOf 5
+          *     使用何种形式，方法和操作符，取决于如何使用：s.indexOf(5)，或者 s indexOf 5
           *
           * 前缀、中缀、后缀操作符 P53
           */
@@ -63,7 +63,7 @@ object a1_base extends App {
             println("\nsyntax_operator:")
             /**
               * 中缀操作符
-              * 为1的int对象，调用了+方法，参数是Int对象2
+              *     为1的int对象，调用了+方法，参数是Int对象2
               */
             val x1 = 1 + 2
             val y1 = (1).+(2)

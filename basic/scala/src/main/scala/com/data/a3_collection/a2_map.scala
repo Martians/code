@@ -9,7 +9,8 @@ object a2_map {
 
         /**
           * map应该定义为 var map
-          *     因为 += 需要对map重新赋值，如果是 val将无法 成功
+          *     1. map是immutable无法就地修改
+          *     2. += 需要对map重新赋值，如果是 val将无法 成功
           */
         var map = Map(1 -> "go to", 2 -> "Dig", 3 -> "find")
         map += 4 -> "bb"
@@ -33,8 +34,11 @@ object a2_map {
           */
         val map = Map(1 -> "go to", 2 -> "Dig", 3 -> "find")
 
-        // 这里执行了隐式转换，scala中允许任何对象用 ->
-        map += (3 -> "get it")    // 使用 +=, 覆盖Key之前已经存在的value
+        /**
+          * 这里执行了隐式转换，scala中允许任何对象用 ->
+          *     使用 +=, 覆盖Key之前已经存在的value
+          */
+        map += (3 -> "get it")
         println(map)
     }
 

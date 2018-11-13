@@ -7,7 +7,7 @@ package com.data.a2_class
   */
 object a2_tuple {
     /**
-      * tuple不能使用apply方法：因为apply方法要返回相同的类型
+      * tuple不能使用apply方法：因为apply方法要返回相同的类型，因此不能用 tuple(1)、tuple(2)
       *
       */
     def operate_tuple() = {

@@ -3,15 +3,15 @@ package com.data.a2_class
 /**
   * 扩展、混入特质（min in）
   *     1. 类似于接口，但是可以保存成员状态；但不能有主构造函数
-  *     2. 解决多继承问题，可以设置默认实现（java中的接口可以有默认实现了）
-  *     3. 特质是可堆叠的，几个重载了相同函数的特质，可以一起混入，连续起作用
+  *     2. 解决多继承问题，可以设置默认实现（实际上 java8 中的接口可以有默认实现了）
+  *     3. 特质是可堆叠的，几个重载了相同函数的特质，可以一起混入，串联起作用，但要注意顺序
   *
   * 语法
   *     只混入特质，使用extends；同时继承超类并混入特质，使用 extends ... with ...
   *
   * 设计
-  *     1. 最终编译器会将特质编译成接口，接口运行稍慢与虚方法（如果发现是瓶颈可以改成超类）
-  *     2. 多个类中使用
+  *     1. 最终编译器会将特质编译成接口，接口运行稍慢于虚方法（如果发现是瓶颈可以改成超类）
+  *     2. 要在多个类中使用的话，就定义为特质
   *
   * 常见特质：
   *     1. Ordered[type]，混入之后，就可以使用 > < 等操作符了
@@ -38,6 +38,9 @@ object a1_trait extends App {
           *     3）super对trait来说是动态绑定的
           */
         trait Increase extends IntQueue {
+            /**
+              * 注意，super.put 在定义特质时尚未实现
+              */
             abstract override def put(x: Int) {super.put(x + 1)}
         }
         trait Double extends IntQueue {
@@ -46,8 +49,8 @@ object a1_trait extends App {
 
         /**
           * 灵活性：
-          *     混入顺序：右边的特质先起作用
-          *     不同的特质，都重载了相同的函数，他们将进行一连串连续操作
+          *     混入的顺序：右边的特质先起作用
+          *     混入的多个不同的特质，都重载了相同的函数，他们将进行一连串连续操作
           */
         val queue = new BaseIntQueue with Increase with Double
         queue.put(2)

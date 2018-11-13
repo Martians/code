@@ -3,15 +3,15 @@ package com.data.a3_collection
 /**
   * list是immutable类型，对应于mutable的array
   *
-  * list被定义为只能像stack一样使用
-  *     head：第一个元素
-  *     tail: 除第一个元素之外的list， head + tail = list
-  *     init：除最后一个元素之外的list
-  *     last：最后一个元素
+  *     1. list被定义为只能像stack一样使用
+  *         head：第一个元素
+  *         tail: 除第一个元素之外的list， head + tail = list
+  *         init：除最后一个元素之外的list
+  *         last：最后一个元素
   *
-  *     head + init 构成完整list
+  *         head + init 构成完整list
   *
-  * Nil是空列表
+  *     2. Nil是空列表
   *
   */
 object a1_list {
@@ -22,7 +22,7 @@ object a1_list {
         val b = List(4, 5, 6)
 
         /**
-          * 初始化：结尾必须有个Nil，只有Nil有::方法
+          * 初始化：结尾必须有个Nil; 只有Nil有::方法
           */
         val c = 1::2::3::Nil
 

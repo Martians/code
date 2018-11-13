@@ -4,12 +4,14 @@ import java.io.FileNotFoundException
 
 object a4_control extends App {
     /**
-      * 几乎所有的控制结构，都会产生某个值
-      * 引入变量，等效于计算他的表达式，因此可以省略这个变量的定义 P74
-      *
+      * 几乎所有的控制结构，都会产生某个值：因此可以将控制结构，当做表达式来使用
+      *     引入变量，等效于计算他的表达式；如果控制结构可以产生值，那么可以省略这个变量的定义 P74
       */
     def operate_normal()= {
 
+        /**
+          * 三元表达式
+          */
         val c1 = if (1 > 0) 5 else 4
 
         /**
@@ -17,6 +19,8 @@ object a4_control extends App {
           *     1. 不是表达式；他们自身不能产生有意义的结果；他们通常和var结对出现
           *     2. 通常为了去掉他们和var，需要使用递归，这样更易于理解 (P84)
           *        实际上，如果是尾递归，那么编译器会生成类似于while的代码出来
+          *     3. 尽量不使用while，必然是产生副作用的地方
+          *
           *  代码例子：P87 打印乘法表
           */
     }
@@ -30,30 +34,31 @@ object a4_control extends App {
 
         var line = ""
         /**
-          * 这里的输出，是unit，而不是；因此 while ((line = readLine())) 不会起作用
+          * 特别注意：
+          *     这里的输出，是unit，而不是line自身；因此 while ((line = readLine())) 不会起作用
           */
         println("(line = \"abc\") value always: " + (line = "abc")) //返回值是 ()
 
-        /**
-          * 尽量不使用while，必然是产生副作用的地方
-          */
-
-        if (false) {
-            // for: 添加过滤器
-            //  1）if可以不带括号 2）带多个filter
+        if (true) {
+            /**
+              * for：
+              *     1. 添加多个过滤器
+              *     2. 使用 {} 代替 ()，可以省略 多个if 之间的; （当前scala版本都不需要;了）
+              */
             for (i <- 1 to 10
-                 if i % 2 > 0;
+                 if i % 2 > 0
                  if i > 5
             ) println(i)
 
-            //  for 使用{}, 可以省略;
             for { i <- 1 to 10
                   if i % 2 > 0
                   if i > 5
             } println(i)
 
-            //  for 嵌套
-            //    x是变量绑定，记录中间信息，不需要带val x
+            /**
+              * for 嵌套:
+              *     x 是变量绑定，记录中间信息，不需要预先定义，如：val x
+              */
             for { i <- 1 to 10
                   if i % 2 > 0
                   j <- 1 to i
@@ -70,12 +75,12 @@ object a4_control extends App {
         val y = 1 until 4
 
         /**
-          * for乘坐生成器语法
+          * for 生成器语法
           *     1. to：包括end， until：不包括end
           *     2. 多个过滤器；
           *             如果使用for(), 多个过滤器之间必须有; 使用 for{} 大括号时不需要 (P78)
           *     3. yield：
-          *         生成的结果Array
+          *         生成的结果是Array
           */
         val loop =
             for { i <- 1 to 10 if i % 2 == 0
@@ -84,7 +89,6 @@ object a4_control extends App {
                   if i > 5; if i > 2
             } yield {(i, j)}
         println("generate (i, j): " + loop)
-
 
         /**
           * for的结果直接输出， P78
@@ -98,8 +102,8 @@ object a4_control extends App {
 
     /**
       * 异常处理：
-      *     throw不会产生任何职，返回Nothing类型，但仍然可以将其当做表达式
-      *     不需要捕获检查异常
+      *     throw不会产生任何有意义的值，仍然可以将其当做表达式；返回Nothing类型，Nothing是所有类型的子类
+      *     不需要捕获检查异常？
       */
     def operate_exception(): Unit = {
         println("\n\noperate_exception:")
@@ -111,7 +115,7 @@ object a4_control extends App {
         /**
           * try-cache 也可以产生值
           *     这里有个错误，因为有了finally，因此返回的是finally中的结果 Uint
-          *
+          *     不用使用此语法，容易出错
           */
         val url = try {
             } catch {
@@ -126,8 +130,8 @@ object a4_control extends App {
     }
 
     /**
-      * 可以匹配任何常量
-      *     结尾不需要break
+      * match 可以匹配任何常量
+      *         结尾不需要break
       */
     def operate_matching()= {
         println("\n\noperate_matching:")
@@ -135,7 +139,8 @@ object a4_control extends App {
         val data = "long"
 
         /**
-          * 这里不同的分支，返回的是不同的值类型！
+          * 特别注意：
+          *     这里不同的分支，返回的是不同的值类型，Int、String、Unit
           */
         val result = data match {
             case "long" => println("match long"); 5

@@ -3,7 +3,7 @@ package com.data.a4_io
 /**
   * P34
   */
-object FileIO {
+object a0_file {
 
   def operate_file(): Unit = {
     val filelist = (new java.io.File(".")).listFiles
