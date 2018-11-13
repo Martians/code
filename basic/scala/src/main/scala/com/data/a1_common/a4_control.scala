@@ -2,6 +2,11 @@ package com.data.a1_common
 
 import java.io.FileNotFoundException
 
+/**
+  * 小结：
+  *     1. 大部分控制结构也会产生值
+  *     2. for 生成器、过滤、嵌套
+  */
 object a4_control extends App {
     /**
       * 几乎所有的控制结构，都会产生某个值：因此可以将控制结构，当做表达式来使用

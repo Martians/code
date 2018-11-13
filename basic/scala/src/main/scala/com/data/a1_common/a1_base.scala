@@ -1,6 +1,11 @@
 package com.data.a1_common
 
 /**
+  * 小结：
+  *     1. val、var
+  *     2. 操作符实际上就是调用函数，前缀、中缀、后缀
+  *        变量上执行()，实际是调用apply方法
+  *
   * 每个文件都隐含包含了 java.lang、Predef的成员引用（包含println、assert）
   *
   * 应用程序编写：
@@ -85,7 +90,7 @@ object a1_base extends App {
 
             /**
               * 前缀操作符
-              * 只有：+ - ! ~ 四种，注意，这里没有*；转换为相应的函数调用 P53
+              *     只有：+ - ! ~ 四种，注意，这里没有*；转换为相应的函数调用 P53
               */
             val x2 = -0.2
             val y2 = (0.2).unary_-
@@ -98,7 +103,6 @@ object a1_base extends App {
             println("list cons a:::b:  " + (a ::: b))
             println("equal - b.:::(a): " + (b.:::(a)))
         }
-
 
         /**
           * 在对象后跟()，实际执行的转换方式
