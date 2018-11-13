@@ -5,6 +5,12 @@ package com.data.a2_class;
  * 但是java可以自动确保类型安全
  *
  * 注意：不能实例化类型参数，即不能用new
+ *
+ *
+ * Example
+ *      1. Enum <E extends Enum<E>>, https://bbs.csdn.net/topics/390971992
+ *      2. <E extends Enum<E>> E getEnum(String key, Class<E> clazz)
+ *          https://stackoverflow.com/questions/4014117/enum-valueofclasst-enumtype-string-name-question
  */
 
 import java.util.List;
