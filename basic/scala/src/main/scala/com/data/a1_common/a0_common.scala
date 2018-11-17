@@ -51,6 +51,7 @@ package com.data.a1_common
             函数返回值可以省略，系统能够推断的情况下（如果是递归使用，则必须指明）；写明返回值仍然是个好习惯 P18
             函数的参数很多时候可以推断出来，因此能够省略（通过目标类型推断，即函数要用在的地方）
             函数很短时，甚至可以去掉花括号，与def写在同一行
+        样本类、模式匹配
 
     ## 语法
         定义变量时，除了类型之外，多加了一个 val（类似于java的final）、var
@@ -118,6 +119,9 @@ package com.data.a1_common
         特质类似于接口，但是能做更多事情，保存成员状态
         命名空间可以用 {}包含起来，包可以是嵌套的 P175
 
+一个文件中可以写多个类
+都进行了类型擦除
+
 ## 工程
     加快编译：P44，fsc快速scala编译器
 
@@ -128,4 +132,5 @@ package com.data.a1_common
     https://www.w3cschool.cn/scaladevelopmentguide/14sl1jb0.html
     http://www.runoob.com/scala/scala-tutorial.html
     https://www.yiibai.com/scala/scala_overview.html#
+
 */

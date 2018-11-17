@@ -43,7 +43,7 @@ object a0_array {
         str.foreach(println)
 
         val x = Array("1", "2", "3")
-        val x = Array[String]("1", "2", "3")
+        val t = Array[String]("1", "2", "3")
 
         val y = Array.apply("1", "2", "3")
         val z = Array.apply[String]("1", "2", "3")

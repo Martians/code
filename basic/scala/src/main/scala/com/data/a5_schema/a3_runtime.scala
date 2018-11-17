@@ -1,4 +1,4 @@
-package com.data.a2_class
+package com.data.a5_schema
 
 /**
   * http://hongjiang.info/scala-type-and-class/
