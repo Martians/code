@@ -1,7 +1,13 @@
 package com.data.a3_collection
 
-
-object a2_map {
+/**
+  *     1. 常见操作：
+  *         ++ List[T]
+  *         keys、keySet
+  *
+  *     2. 可以重载 default 函数，设置默认返回值
+  */
+object a3_map {
 
     def operate_map(): Unit = {
         println("\noperate_map:")
@@ -11,6 +17,8 @@ object a2_map {
           * map应该定义为 var map
           *     1. map是immutable无法就地修改
           *     2. += 需要对map重新赋值，如果是 val将无法 成功
+          *
+          *     这里实际是一个语法糖 P228
           */
         var map = Map(1 -> "go to", 2 -> "Dig", 3 -> "find")
         map += 4 -> "bb"
@@ -60,6 +68,27 @@ object a2_map {
         } else {
             println("nothing")
         }
+
+        /**
+          * 初始化2：
+          *     创建空map
+          */
+        val em = Map.empty[String, Int]
+        em += "a" -> 1
+
+        /**
+          * 直接添加List
+          *     1. 键值对方式写出，("b", 2)
+          *     2. 更普遍的："c" -> 3
+          */
+        em ++= List(("b", 2), "c" -> 3)
+        println("mutable: " + em)
+
+        println("key set: " + em.keySet)
+
+        println("key iterator: " + em.keys)
+        println("value iterator: " + em.values)
+
     }
 
     def main(args: Array[String]): Unit = {

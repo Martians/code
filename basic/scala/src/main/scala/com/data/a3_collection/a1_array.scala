@@ -1,16 +1,19 @@
 package com.data.a3_collection
 
 /**
-  * array
-  *     数组内容是可变的，不是推荐使用的scala结构
+  * 1. array
+  *     数组内容是可变的，不是推荐使用的结构
   *     创建后长度不可变
+  *
+  * 2. ArrayBuffer P218
+  *     空间自增长
   */
-object a0_array {
+object a1_array {
     val data = new Array[String](3)
 
     def operate_base(): Unit = {
         /**
-          * 对象的值参数应用
+          * 对象的值参数应用（对象的值）
           *     array是通过（）访问的，而不是[], scals中没有操作符，都是方法调用
           *     用括号将一个、多个参数传递给变量时，实际调用的是 变量的.apply方法调用 P24
           */

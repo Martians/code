@@ -6,6 +6,10 @@ import java.io.FileNotFoundException
   * 小结：
   *     1. 大部分控制结构也会产生值
   *     2. for 生成器、过滤、嵌套
+  *
+  * 实现：
+  *     1. for表达式，最终会被实现为 map 等高阶函数 P314，
+  *     2. 只要实现了 map、flatmap、filter、foreach，就可以用于for表达式
   */
 object a4_control extends App {
     /**
@@ -66,8 +70,17 @@ object a4_control extends App {
               */
             for { i <- 1 to 10
                   if i % 2 > 0
+                  /**
+                    * 生成
+                    */
                   j <- 1 to i
+                  /**
+                    * 定义
+                    */
                   x = j + 10
+                  /**
+                    * 过滤
+                    */
                   if j > 3
             } println(i + "-" + j + ", " + x)
         }

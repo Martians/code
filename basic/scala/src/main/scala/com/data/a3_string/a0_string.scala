@@ -22,10 +22,11 @@ object a0_string {
     println("\\")
   }
 
-  def regex(): Unit = {
-
+  def convert(): Unit = {
+      println("1".toInt)
   }
+
   def main(args: Array[String]): Unit = {
-    print_string()
+    print_string
   }
 }

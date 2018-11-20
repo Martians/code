@@ -17,12 +17,14 @@ package com.data.a2_class
   *
   * 实现
   *     1. 一个Scala源文件中可以有多个类；实际上编译出来是多个class文件
+  *     2. 每个public的var成员，都隐含实现了 setter（x的 函数名为x_）、getter（x的函数名为x），P235
+  *         实际上var成员是private的，setter、getter是public的
   *
   * 语法
   *     1. 类定义可以有参数，称为类参数，相当于定义了类成员
   *
   */
-object a0_class {
+object a0_class extends App {
 
     def class_simple() = {
         println("\nclass_simple:")
@@ -39,6 +41,12 @@ object a0_class {
             val path = "/home/long"
             private var sum = 0
             protected var access: Int = 0
+
+            /**
+              * 这里将成员初始化为缺省值，根据其类型决定具体值
+              *     如果不定义值的话，会认为该变量时抽象的，而不是未初始化
+              */
+            var work: String = _
 
             /**
               * 函数的定义，必须有一个 =
@@ -235,14 +243,131 @@ object a0_class {
 
     }
 
-    def main(args: Array[String]): Unit = {
-        class_simple()
+    def class_state() = {
+        /**
+          * 每个public的var成员，都隐含实现了 setter（x的 函数名为x_）、getter（x的函数名为x），P235
+          */
+        class Value {
+            var data: Int = _
 
-        class_normal()
+            /**
+              * 这里将 fdata、fdata_定义成了data的getter、setter
+              */
+            def fdata= data * 10
 
-        class_inherit()
+            /**
+              * fdata_= 是函数名
+              */
+            def fdata_= (v: Int)= {
+                require(v > 10)
+                data = v / 10
+            }
+        }
 
-        class_hierarchy()
+        val t = new Value
+        t.data = 100
+        println("class state: ", t.data, t.fdata)
+
+        t.fdata = 200
+        println("class state: ", t.data, t.fdata)
     }
 
+    /**
+      * 1. 将类的主构造函数设置为 private，只能通过辅助构造函数创建，P251
+      * 2. 只暴露特质，实现类混入特质，但设置为private；通过object类的一个工厂方法
+      */
+    def class_hiding() = {
+
+    }
+
+    /**
+      * 类层级，超类的设计
+      *     1.
+      */
+    def class_abstract() = {
+
+        class Food
+        trait RationTait {
+            /**
+              * 抽象类型成员，P273
+              *     1. 必要性：如果不用type，基类中使用了这个固定参数类型的函数；那么子类要重载时就必须完全一致的参数，而不能使用这个参数的子类等
+              *     2. 通过在子类中定义自己的type，可以有不同的函数原型（参数类型不同）
+              *     3. 后续可以用 object.Food 的方式，引用这个类型（其中object是指向一个具体对象的变量），是一个路径依赖类型
+              *
+              */
+            type t <: Food
+
+            /**
+              * 抽象val：
+              *     1. 值不可改变，不能用def重写（def 可能返回不同的值）
+              *     2. 子类对于val的实现，是在超类完成初始化之后才执行的；容易出现错误 P269
+              *
+              *         1）使用预初始化：在with之前，设置初始化字段的值 P270
+              *         2）懒加载：在抽象类中定义为 lazy val a; 这样考虑定义的 文本顺序了
+              */
+            val a: Int
+
+            var b: Int
+
+            /**
+              * 可以用val重写def
+              */
+            def c: String
+        }
+
+        /**
+          * 例子2：P280，货币
+          */
+    }
+
+    def class_inner() = {
+        /**
+          * 类型Inner
+          *     1. 完整路径是 Outer#Inner，但不能用 new Outer#Inner 的方式初始化
+          *     2. 实例化内部类的方式
+          *         1）内部类持有外部类的引用，因此不能再没有外部实例的情况下，实例化内部类；必须在外部类的方法中，实例化内部类
+          *         2）使用路径依赖类型
+          *
+          */
+        class Outer {
+            class Inner
+        }
+        val o1 = new Outer
+        val o2 = new Outer
+
+        /**
+          * 路径依赖类型方式初始化，它们两个是不同的类型，但都继承于 Outer#Inner
+          */
+        val i1 = new o1.Inner
+        val i2 = new o2.Inner
+    }
+
+    def class_enum() = {
+        object Color extends Enumeration {
+            val red, green, blue = Value
+            val a = Value("a")
+            val b = Value("b")
+        }
+
+        /**
+          * 路径依赖类型
+          *     Color.Value
+          */
+        val n = Color.blue
+        val c: Color.Value = n
+
+        println("enum: " + Color.a.id)
+        println("enum: " + Color(1))
+
+    }
+
+    class_simple
+    class_normal
+    class_inherit
+    class_hierarchy
+    class_state
+    class_hiding
+    class_abstract
+    class_inner
+    class_enum
 }

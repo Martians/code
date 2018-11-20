@@ -1,26 +1,33 @@
 package com.data.a3_collection
 
 /**
-  * list是immutable类型，对应于mutable的array
+  * list是immutable类型，对应于mutable的array、ListBuffer
   *
   *     1. list被定义为只能像stack一样使用
   *         head：第一个元素, tail: 除第一个元素之外的list， head + tail = list
   *         init：除最后一个元素之外的list，last：最后一个元素；计算他们需要遍历整个列表
   *
-  *
   *     2. Nil是空列表,  List() == Nil 为真
   *
-  *     list是协变的：S是T的子类型，那么 List[S] 也是 List[T] 的子类型； P194
+  *     3. list是协变的：S是T的子类型，那么 List[S] 也是 List[T] 的子类型； P194
   *         List[Nothing] 是任何 list[T] 的子类型，因此 val xs: List[String] = list()
   *         Nil 就是extend List[Nothing]
   *
   *         这里的list就是叠加而成的，计算length很慢
   *
-  *         头部访问
-  *         尾部访问：先进行翻转
+  *     4. 访问模式：
+  *         适合头部访问
+  *         如果要进行尾部访问：先进行翻转，需要时再翻转回来
+  *
+  *  实现：
+  *     1. List是抽象类，new List不合法；
+  *     2. ::、object 是 List的子类
+  *         case object Nil extends List[Nothing]
+  *         case class ::[T](head: T, tail: List[T]) extends List[T] P303
+  *     3. List内部实现时，部分地方实际采用了 ListBuffer，更加高效
   *
   */
-object a1_list {
+object a2_list {
 
     def operate_list() {
         println("\noperate_list:")
@@ -68,15 +75,23 @@ object a1_list {
 
         /**
           * 高阶函数
-          *     映射：map、flatmap
-          *     过滤：find、partition（类似于filter，但是将filter掉的也收集起来到新的list）
-          *          takeWhile、dropWhile、span 找到符合条件的最常前缀
-          *     论断：forall、exists
-          *     折叠：/: :\ 格式是：(z /: list) (op)；也可以用 foldLeft、foldRight
+          *     1. 映射：map、flatmap
+          *     2. 过滤：find、partition（类似于filter，但是将filter掉的也收集起来到新的list）
+          *             takeWhile、dropWhile、span 找到符合条件的最常前缀
+          *     3. 论断：forall、exists
+          *     4. 折叠：/: :\ 格式是：(z /: list) (op)；也可以用 foldLeft、foldRight
+          *             可以用来实现 reverse
+          *     5. sort
           */
         val r = ("1" /: List("a", "b", "c"))(_ + _)
         println("zip: " + r)
 
+        /**
+          * 伴生对象方法：
+          *     1. apply
+          *     2. range
+          *     3. flatten（将包含了list的list打散）
+          */
     }
 
     def operate_match() = {
@@ -155,9 +170,20 @@ object a1_list {
         println("msort: " + msort[Int](_ < _)(List(1, 3, 7, 8, 2, 10)))
     }
 
+    /**
+      * ListBuffer: P217
+      *     1. 是一个可变对象，+= 可以直接向尾部添加对象（LIst是提供对头部的快速访问）
+      *     2. 代码中的递归不是尾递归时，为了避免栈溢出，用 for + ListBuffer 替代 List 递归
+      */
+    def operate_listbuffer() = {
+
+    }
+
     def main(args: Array[String]): Unit = {
         operate_list
         operate_match
         operate_advance
+
+        operate_listbuffer
     }
 }
