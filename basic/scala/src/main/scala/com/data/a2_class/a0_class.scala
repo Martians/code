@@ -1,27 +1,28 @@
 package com.data.a2_class
 
-
 /**
   * 小结：
   *     1. 访问权限
   *     2. 伴生对象
   *     3. 主构造器
   *     4. 隐式转换
-  *     5. 参数化字段实现重载
-  *     6. 无括号函数，以后可以重载为字段
+  *     5. 参数化字段，实现重载
+  *     6. 基类使用无括号函数，子类以后可以重载为字段
+  *     7. 类型占位、别名，可以用 type abc = String
+  *     8. 路径依赖类型、内部类
   *
   * 设计
   *     1. 不可变对象的优势：P62
   *         优势：更容易理解；自由传递：线程安全、Hash表安全
-  *         劣势：如果对象很大复制就很慢；而可变对象的更改在原址发生
+  *         劣势：如果对象很大复制就很慢；而可变对象的更改在原址发生；经常需要混合使用
   *
   * 实现
   *     1. 一个Scala源文件中可以有多个类；实际上编译出来是多个class文件
   *     2. 每个public的var成员，都隐含实现了 setter（x的 函数名为x_）、getter（x的函数名为x），P235
-  *         实际上var成员是private的，setter、getter是public的
+  *        实际上var成员是private的，setter、getter是public的
   *
   * 语法
-  *     1. 类定义可以有参数，称为类参数，相当于定义了类成员
+  *     1. 类定义可以有参数，称为类参数，相当于定义了类成员（需要加val、var前缀，样本类中不需要这些限制）
   *
   */
 object a0_class extends App {
@@ -44,7 +45,7 @@ object a0_class extends App {
 
             /**
               * 这里将成员初始化为缺省值，根据其类型决定具体值
-              *     如果不定义值的话，会认为该变量时抽象的，而不是未初始化
+              *     如果不定义任何值的话，会认为该变量时抽象的，而不是未初始化
               */
             var work: String = _
 
@@ -68,7 +69,7 @@ object a0_class extends App {
           * 伴生对象（companion object），相当于了singleton
           *     1）每个单例对象，都由一个静态变量指向的虚构类的一个实例，当前名称为：CheckSum$
           *        是CheckSum的伴生对象，可以访问其私有成员
-          *        不能带参数构造，不能使用new
+          *        不能带参数构造，不能使用new；可以 extend
           *
           *     2）对没有任何伴生类的伴生对象，称为是独立对象；可以当做程序入口点、实现工具类等
           */
@@ -104,7 +105,7 @@ object a0_class extends App {
           *
           * 说明：
           *     1. 主构造器定义的成员变量，仅能内部访问; 这里笔记写的是错误的？
-          *         不能从外部引用访问(that: Rational, that.d、that.n 访问失败)???? 似乎可以访问
+          *         不能从外部引用访问(that: Rational, that.d、that.n 访问失败)
           *     2. 可以使用参数化字段方式来实现
           *     3. 类定义中的代码，都将是主构造器的执行代码，包括定义成员变量等
           */
@@ -175,11 +176,12 @@ object a0_class extends App {
     }
 
     /**
-      * 1. 使用无参数方法，支持统一访问原则，client不受通过字段，还是方法来实现属性的影响
+      * 1. 无参数方法：支持统一访问原则，client端不受实现端通过字段，还是方法来实现属性的影响
       *     1）仅定义不带参数、没有副作用的方法为无参方法
       *     2）另外，在调用无参数的任何函数式时，如果不是仅仅访问对象内容，而是进行了某些改变，推荐调用方法时，写上()
       *
-      * 2. 重载非抽象成员，必须使用override，以免覆盖后自己不知道
+      * 2. 重载非抽象成员，必须使用override，以免未重载时自己不知道，编译器帮助检查
+      *
       * 3. final确保不被重载
       */
     def class_inherit() {
@@ -194,7 +196,7 @@ object a0_class extends App {
             /**
               * 无参数方法
               *     继承类中可以改成 val height = contents.length，那么client代码也不需要改变，P140
-              *         1）java中有四个命令空间，scala中仅有两个（值、类型），因此方法、成员如果重名，会被检测出来
+              *         java中有四个命令空间，scala中仅有两个（值、类型），因此方法、成员如果重名，会被检测出来
               */
             def height: Int = contents.length
             def width: Int = if (contents.length == 0) 0 else contents(0).length
@@ -203,19 +205,19 @@ object a0_class extends App {
         /**
           * 重载方式
           *     1）字段和方法在相同的命名空间：名字不能重复；字段、无参数的方法，可以互相重载
-          *     2）这里是实现抽象成员，override可选；
+          *     2）实现抽象成员时，override可选；
           *        如果在父类中不是抽象的，那么必须带 override；这时为了防止意外覆盖了基类的函数却不知道
           *
           *        父类中contents是函数，子类这里是字段
           */
         class ArrayElement1(conts: Array[String]) extends Element {
-            val contents: Array[String] = conts //
+            val contents: Array[String] = conts
         }
 
         /**
           * 参数化字段方式重载 P141
-          *     1）这是同一时间，用相同的名称定义参数和字段（即类成员）的简写方式
-          *     2）可以添加protected、override等前缀
+          *     1）这是同一时间，用相同的名称定义参数和字段（即类成员）的简写方式；必须使用val、var才能达到此效果
+          *     2）可以添加protected、override等前缀；这里必须用 val、var，否则无法转换为类成员，以实现达到实现父类中抽象成员的目的
           */
         class ArrayElement2(val name: String,
                             val contents: Array[String],
@@ -240,7 +242,6 @@ object a0_class extends App {
       *            因此throw nothing类型，可以兼容函数返回值，放在函数中任何位置 P159
       */
     def class_hierarchy(): Unit = {
-
     }
 
     def class_state() = {
@@ -251,7 +252,8 @@ object a0_class extends App {
             var data: Int = _
 
             /**
-              * 这里将 fdata、fdata_定义成了data的getter、setter
+              * 相当于这里将 fdata、fdata_定义成了data的getter、setter
+              *     重新起了自己的名字，并进行了一些转换，并非直接赋值
               */
             def fdata= data * 10
 
@@ -273,8 +275,9 @@ object a0_class extends App {
     }
 
     /**
-      * 1. 将类的主构造函数设置为 private，只能通过辅助构造函数创建，P251
-      * 2. 只暴露特质，实现类混入特质，但设置为private；通过object类的一个工厂方法
+      * 类隐藏不暴露：
+      *     1. 将类的主构造函数设置为 private，只能通过辅助构造函数创建，P251
+      *     2. 只暴露特质（特质是外界需要的），实现类混入特质，但设置为private；通过object类的一个工厂方法返回实现了特质的类对象
       */
     def class_hiding() = {
 
@@ -282,7 +285,6 @@ object a0_class extends App {
 
     /**
       * 类层级，超类的设计
-      *     1.
       */
     def class_abstract() = {
 
@@ -290,8 +292,8 @@ object a0_class extends App {
         trait RationTait {
             /**
               * 抽象类型成员，P273
-              *     1. 必要性：如果不用type，基类中使用了这个固定参数类型的函数；那么子类要重载时就必须完全一致的参数，而不能使用这个参数的子类等
-              *     2. 通过在子类中定义自己的type，可以有不同的函数原型（参数类型不同）
+              *     1. 必要性：如果不用type，基类中使用了这个固定参数类型的函数；那么子类要重载时就必须完全一致的参数，而不能使用这个参数的子类型作为参数，等
+              *     2. 通过在子类中定义自己的type，可以有不同的函数原型（参数类型不同）；一系列的函数都可以认为是重载的
               *     3. 后续可以用 object.Food 的方式，引用这个类型（其中object是指向一个具体对象的变量），是一个路径依赖类型
               *
               */
@@ -358,7 +360,6 @@ object a0_class extends App {
 
         println("enum: " + Color.a.id)
         println("enum: " + Color(1))
-
     }
 
     class_simple

@@ -16,7 +16,7 @@ object a3_runtime {
 
 
         val x = Array[String]()
-        println("cury: " + x.getClass)
+        println("currying: " + x.getClass)
         println(x.getClass.getSimpleName)
         println(x.asInstanceOf[AnyRef].getClass.getSimpleName)
         println(classOf[Array[String]])

@@ -37,9 +37,10 @@ object a5_generic extends App {
 
         val abcde = List('a', 'b', 'c', 'd', 'e')
         /**
-          * 1. 指明类型
-          * 2. 类型标注
-          * 3. 无法推断：msort(_ > _)(abcde)
+          * 使用时的类型标注：
+          *     1. 指明类型
+          *     2. 类型标注
+          *     3. 无法推断：msort(_ > _)(abcde)
           */
         msort((x: Char, y: Char) => x > y)(abcde)
         msort[Char](_ > _)(abcde)

@@ -23,7 +23,7 @@ object a1_assert extends App {
         }
 
         /**
-          * 方式2：表达式的返回值，调用ensuring，执行一个判断
+          * 方式2：对表达式的返回值，调用ensuring，执行一个判断
           *     1. ensuring 存在隐式转换
           *     2. ensuring 有一个论断函数，会将调用者当做参数传入这个函数进行判断
           */

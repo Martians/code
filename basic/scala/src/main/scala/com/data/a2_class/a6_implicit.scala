@@ -6,7 +6,7 @@ import java.util.RandomAccess
   * 需要隐式转换场景：P287
   *     1. 给一个已有的类（没有其源码），添加新的特质，增加各种方法
   *
-  *     2. 支持目标类型的转换，在需要目标类型的时候，可以将当前类型执行转换
+  *     2. 支持目标类型的转换，在需要目标类型的时候，可以隐式的将当前类型执行转换为目标类型
   *         1）某个操作 x + y 不能执行时，编译器可能会改为 convert(x) + y，convert把x转换为某种带了+方法的类
   *            这种方式修复程序以便让它通过类型检查；而且 convert 是一个非常简单的转换函数时，省略它可以简化代码
   *         2）系统默认存在的隐式转换：implicit int2double
@@ -42,7 +42,7 @@ object a6_implicit extends App {
           * 定义方式：
           *     1. 使用方式：implicit 前缀
           *     2. 引用方式：单一标识符的形式存在于作用域（即：不能是 com.data.convert 这种形式）
-          *     3. object： 编译器将在源类型、期望类型的伴生对象中查找隐式定义
+          *     3. object：编译器也会在源类型、期望类型的伴生对象中查找隐式定义
           *
           */
         implicit def Wrapper(s: String) = {
@@ -60,10 +60,10 @@ object a6_implicit extends App {
         /**
           * 在源、目的类型的object中定义
           */
-        case class Dollar(name: String)
-        case class Euro(name: Int)
-        object Dollar {
-            implicit def convertTo(x: Dollar): Euro = { new Euro(x.name.toInt) }
+        class DollarA(val name: String)
+        class Euro(val name: Int)
+        object DollarA {
+            implicit def convertTo(x: DollarA): Euro = { new Euro(x.name.toInt) }
         }
     }
 

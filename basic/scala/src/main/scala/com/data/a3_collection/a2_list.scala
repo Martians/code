@@ -20,12 +20,11 @@ package com.data.a3_collection
   *         如果要进行尾部访问：先进行翻转，需要时再翻转回来
   *
   *  实现：
-  *     1. List是抽象类，new List不合法；
-  *     2. ::、object 是 List的子类
+  *     1. List是抽象类，new List不合法
+  *     2. ::、Nil 是 List的子类
   *         case object Nil extends List[Nothing]
-  *         case class ::[T](head: T, tail: List[T]) extends List[T] P303
+  *         case class ::[T](head: T, tail: List[T]) extends List[T] P303 ？
   *     3. List内部实现时，部分地方实际采用了 ListBuffer，更加高效
-  *
   */
 object a2_list {
 
@@ -103,7 +102,7 @@ object a2_list {
         /**
           * 列表的模式匹配,
           *     1. P196（还不太懂）
-          *         1） 形式1：个数必须完全对应
+          *         1）形式1：个数必须完全对应
           *         2）形式2：最后一个包含了剩下的元素
           *
           */

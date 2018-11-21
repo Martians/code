@@ -5,10 +5,10 @@ import java.io.FileNotFoundException
 /**
   * 小结：
   *     1. 大部分控制结构也会产生值
-  *     2. for 生成器、过滤、嵌套
+  *     2. for 生成器、过滤、嵌套，在for内部就可以写很多语句，而不是非要等到 {执行体} 中
   *
   * 实现：
-  *     1. for表达式，最终会被实现为 map 等高阶函数 P314，
+  *     1. for表达式，最终会被实现为 map 等高阶函数 P314
   *     2. 只要实现了 map、flatmap、filter、foreach，就可以用于for表达式
   */
 object a4_control extends App {
@@ -95,10 +95,8 @@ object a4_control extends App {
         /**
           * for 生成器语法
           *     1. to：包括end， until：不包括end
-          *     2. 多个过滤器；
-          *             如果使用for(), 多个过滤器之间必须有; 使用 for{} 大括号时不需要 (P78)
-          *     3. yield：
-          *         生成的结果是Array
+          *     2. 多个过滤器: 如果使用for(), 多个过滤器之间必须有; 使用 for{} 大括号时不需要 (P78)
+          *     3. yield：生成的结果是Array
           */
         val loop =
             for { i <- 1 to 10 if i % 2 == 0
@@ -133,7 +131,7 @@ object a4_control extends App {
         /**
           * try-cache 也可以产生值
           *     这里有个错误，因为有了finally，因此返回的是finally中的结果 Uint
-          *     不用使用此语法，容易出错
+          *     尽量不用使用此语法，容易出错
           */
         val url = try {
             } catch {
@@ -155,7 +153,6 @@ object a4_control extends App {
         println("\n\noperate_matching:")
 
         val data = "long"
-
         /**
           * 特别注意：
           *     这里不同的分支，返回的是不同的值类型，Int、String、Unit

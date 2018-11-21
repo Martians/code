@@ -6,9 +6,8 @@ package com.data.a1_common
   *     2. 操作符实际上就是调用函数，前缀、中缀、后缀
   *        变量上执行()，实际是调用apply方法
   *
-  * 每个文件都隐含包含了 java.lang、Predef的成员引用（包含println、assert）
-  *
-  * 应用程序编写：
+  * 1. 默认import：每个文件都隐含包含了 java.lang、Predef的成员引用（包含println、assert）
+  * 2. 应用程序编写：
   *     1. 常规：编写main方法
   *     2. 简化：object混入 App 特质接口；但不可访问命令行参数了；通常只用于简单程序时使用 P45
   */
@@ -23,7 +22,7 @@ object a1_base extends App {
         println(a.max(b))
 
         /**
-          * 基本类型，定位为抽象、final的，不能直接new
+          * 基本类型，定位为抽象、final的，不能直接new，必须使用其伴生对象进行构造
           * 1）new Int(5)：调用的将是 object.apply
           * 2) c = 5：调用的是？
           */
@@ -31,7 +30,7 @@ object a1_base extends App {
     }
 
     /**
-      * 没有int，只有Int
+      * 没有int，只有Int；scala中都是对象
       */
     def operate_type() = {
 
@@ -47,6 +46,7 @@ object a1_base extends App {
     /**
       * 变量名覆盖
       *     在内部范围中，可以定义与内部范围相同的变量名字
+      *     Java中是不允许的？
       */
     def operate_scope(): Unit = {
         val a = 1;
@@ -132,7 +132,7 @@ object a1_base extends App {
 
             // 值相等性
             println("equality: " + (1 == 1.0)) // true，精度取决于第一个参数, 1.equal(1.0)
-            println("equality: " + (1 == List(1, 2, 3))) // false，任何对象都可以比较，都是从Unit继承的？
+            println("equality: " + (1 == List(1, 2, 3)) == true) // false，任何对象都可以比较，都是从Unit继承的？
         }
     }
 
