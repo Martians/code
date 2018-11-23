@@ -6,10 +6,10 @@ print(type(ls))
 ''' 语法上没错，但是python中不会这么用
 '''
 if type(ls) == list:
-    print "yes1"
+    print("yes1")
 
 if type(ls) == type([]):
-    print 'yes2'
+    print('yes2')
 
 if isinstance(ls, list):
-    print 'yes3'
+    print('yes3')

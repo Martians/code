@@ -1,0 +1,37 @@
+---
+- hosts: cluster
+  remote_user: root   #
+  vars:
+    ppt: 55
+  tasks:
+    - name: ensure ssh start
+      service:
+        name: sshd
+        state: started
+
+    - name: shell and command
+      shell: ls /ss || /bin/true
+      ignore_errors: True
+      notify:
+        - set flag
+
+    - name: command {{ ansible_local.file1.general.asdf }}
+      command: echo command {{ ansible_local.file1.general.asdf }} || ls /ss || /bin/true
+      ignore_errors: True
+      notify:
+        - set flag
+
+    - name: Copy ansible inventory file to client
+      copy: src=/etc/ansible/hosts dest=/tmp/hosts
+              owner=root group=root mode=0644
+
+    - name: old param format # 参数的另一种写法
+      service: name=sshd state=started
+
+    - command: echo {{ item }}
+      with_items: [ 0, 2, 4, 6, 8, 10 ]
+      when: item > 5
+
+  handlers:
+    - name: set flag
+      shell: echo 11 >> /tmp/flag

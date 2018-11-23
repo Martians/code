@@ -173,7 +173,7 @@ print m.groupdict()
 print re.sub(r"(?P<first>\w+\.)(?P<last>\w+\.com)", "\g<last> --", "www.google.com")
 
 # 给子组起名，并在正则表达式中使用子组的内容
-match(r"(?P<data>\w+) - (?P=data)\.", "www - www.com")
+match(r"(?P<src>\w+) - (?P=src)\.", "www - www.com")
 
 print "\n============ locate group"
 ''' 前视匹配: ?=  ?!

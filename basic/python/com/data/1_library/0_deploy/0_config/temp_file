@@ -1,0 +1,47 @@
+#--------------------------------------------------------------
+# normal config
+UsePAM yes
+
+#--------------------------------------------------------------
+# yaml
+
+# one logical cluster from joining another.
+# one logical cluster from joining another.
+# one logical cluster from joining another.
+cluster_name: my_cluster
+
+local parameters:
+    # seeds is actually a comma-delimited list of addresses.
+    # Ex: "<ip1>,<ip2>,<ip3>"
+    - seeds: 192.168.10.1
+
+data_file_directories: 
+    - /mnt/disk1
+    - /mnt/disk2
+    - /mnt/disk3
+#     - /var/lib/cassandra/data
+
+# Setting listen_address to 0.0.0.0 is always wrong.
+# ss
+listen_address: 192.168.10.1
+
+
+
+# set broadcast_rpc_address to a value other than 0.0.0.0.
+#
+# For security reasons, you should not expose this port to the internet.  Firewall it if needed.
+# broadcast_rpc_address: 1.2.3.4
+rpc_address: 192.168.10.11
+
+if [ "x$LOCAL_JMX" = "x" ]; then
+bbc=3
+    LOCAL_JMX=yes
+fi
+LOCAL_JMX=no
+cc_address: 192.168.10.11
+
+
+1111111111111111111111111111111111111111111111
+1111111111111111111111111111111111111111111111
+1111111111111111111111111111111111111111111111
+not_find_insert
