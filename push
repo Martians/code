@@ -4,6 +4,7 @@ if [ -e ../code/push ] && ! [[ `pwd` =~ .*code$ ]] && [[ $1 != 1 ]]; then
 	sh ../code/push 1
 else
 	git add -A .
-	git ci -m "fix" &&
+	git diff --cached --quiet || 
+		git ci -m "fix" &&
 		git push origin master
 fi
