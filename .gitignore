@@ -45,6 +45,7 @@ unused.txt
 # language
 	## go
 vendor/
+pkg/dep/
 	## python
 *__pycache__/
 *.pyc
