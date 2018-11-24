@@ -1,4 +1,4 @@
 #!/bin/sh
 git add -A .
 git ci -m "fix" &&
-git push origin master && echo 11111
+git push origin master
