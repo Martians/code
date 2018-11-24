@@ -1,4 +1,9 @@
 #!/bin/sh
-git add -A .
-git ci -m "fix" &&
-git push origin master
+
+if [ -e ../code/push ] && ! [[ `pwd` =~ .*code$ ]]; then
+	sh ../code/push
+else
+	git add -A .
+	git ci -m "fix" &&
+		git push origin master
+fi
