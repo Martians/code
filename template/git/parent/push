@@ -25,6 +25,5 @@ git submodule foreach 'sh push; echo ||:'
 
 echo "update parent:"
 git add -A .
-git ci -m "fix"
-
-git push --recurse-submodules=on-demand
+git diff --cached --quiet || 
+	(git ci -m "fix" && git push --recurse-submodules=on-demand)
