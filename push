@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -e ../code/push ] && ! [[ `pwd` =~ .*code$ ]]; then
+if [ -e ../code/push ] && ! [[ `pwd` =~ .*code$ ]] && [[ $1 != 1 ]]; then
 	sh ../code/push
 else
 	git add -A .
