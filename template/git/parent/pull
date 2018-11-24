@@ -20,8 +20,8 @@
 # git submodule update --remote --merge
 
 ## 方式2：
-git submodule foreach "sh pull ||:"
+git submodule foreach "sh pull; echo ||:"
 
-
+echo "update parent:"
 git fetch origin
 git merge origin/master
