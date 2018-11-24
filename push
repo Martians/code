@@ -1,7 +1,5 @@
 #!/bin/sh
 git add -A .
-echo $?
 git ci -m "fix" 
-echo $?
+
 git push origin master
-echo $?
