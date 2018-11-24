@@ -3,6 +3,6 @@
 if [ -e ../code/pull ] && ! [[ `pwd` =~ .*code$ ]] && [[ $1 != 1 ]]; then
 	sh ../code/pull 1
 else
-	git fetch origin
-	git merge origin/master
+	result=`git fetch origin`
+	[[ $result ]] && git merge origin/master
 fi
