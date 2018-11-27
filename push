@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# not in code dir; $1 used for prevent from endless loop 
 if [ -e ../code/push ] && ! [[ `pwd` =~ .*code$ ]] && [[ $1 != 1 ]]; then
 	sh ../code/push 1
 else

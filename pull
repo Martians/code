@@ -7,6 +7,7 @@ else
 	# [[ $result ]] && git merge origin/master
 
 	git fetch origin
-	git diff master origin/master --quiet || 
+	if !(git diff master origin/master --quiet); then
 		git merge origin/master
+	fi
 fi
