@@ -1,10 +1,11 @@
-#coding=utf-8
+# coding=utf-8
 
-#!/user/bin/env python
-#!/user/local/bin/python
+# !/user/bin/env python
+# !/user/local/bin/python
 
-''' 两种前缀写法，第一种适应性更强
-    在PATH中查找python的路径
+''' 
+    1. 头部必须有 coding=utf-8 后续才能编写中文
+    2. 两种magic，第一种适应性更强：在PATH中查找python的路径
 '''
 
 # 获得 python 格言

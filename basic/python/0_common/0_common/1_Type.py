@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 ''' Python的主要分类
     1. 数字

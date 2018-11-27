@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 '''
     方案：本地记录网址信息, 第三课

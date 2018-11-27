@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 '''
     中文：http://www.ansible.com.cn/docs/intro_getting_started.html#gs-about

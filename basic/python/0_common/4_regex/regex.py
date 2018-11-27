@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 import re;
 # Python核心编程，第三版第一章

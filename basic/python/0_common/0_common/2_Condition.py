@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 banned_users = ['andrew', 'carolina', 'david']
 user = 'marie'

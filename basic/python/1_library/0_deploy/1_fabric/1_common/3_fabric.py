@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 '''
     本文档用 python 3_fabric.py 的方式执行

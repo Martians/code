@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 ls = [1, 2, 3, 4]
 print(type(ls))

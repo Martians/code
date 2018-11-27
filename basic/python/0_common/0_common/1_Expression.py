@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 
 d = {"a": 1, 'c': 3, 'b': 2}

@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 '''
     方案：使用数据库记录信息，master协调多个client, 第五课、第六课

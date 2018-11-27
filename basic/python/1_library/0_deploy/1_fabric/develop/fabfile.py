@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 ''' http://docs.fabfile.org/en/2.0/cli.html
     http://docs.pyinvoke.org/en/latest/invoke.html#inv

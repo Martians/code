@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 from fabric import Connection, SerialGroup as Group, Config
 

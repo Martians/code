@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 '''
     本地命令执行测试

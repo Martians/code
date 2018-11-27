@@ -1,9 +1,9 @@
-#coding=utf-8
+# coding=utf-8
 
 import paramiko
 
 config = {
-    'host': '192.168.10.10',
+    'host': '192.168.0.80',
     'port': 22,
     'user': 'long',
     'pass': '111111'
