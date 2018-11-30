@@ -73,5 +73,6 @@ log/
 temp/
 tmp/
 output/
+test/
 download/
 
