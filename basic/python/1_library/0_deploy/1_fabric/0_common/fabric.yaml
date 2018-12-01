@@ -1,8 +1,10 @@
 
-# http://www.ruanyifeng.com/blog/2016/07/yaml.html
 
 other: 111
 
 user: root
 connect_kwargs:
+    password: '111111'
+
+sudo:
     password: '111111'

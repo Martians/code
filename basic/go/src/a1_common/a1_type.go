@@ -18,7 +18,7 @@ import (
 		map：hash map, 不能使用 cap(map)
    		slice：相当于 vector
 
-		使用通用函数 len、cap、append、delete、copy 等进行操作
+		使用通用函数 len、cap、append、delete、copy 等对集合进行操作
  */
 
 /**
@@ -54,7 +54,7 @@ func Variable() {
 	// 简短赋值语句，要求至少要声明一个新变量
 	f, err2 := os.Create("1")
 
-	// 如果两个返回值，使用前边已经定义过的变量，可以只使用赋值语句即可，不能使用 :=
+	// 如果两个返回值，都使用前边已经定义过的变量，可以只使用赋值语句即可，不能使用 :=
 	f, err = os.Create("1")
 	fmt.Println(f, err, err2)
 
@@ -143,12 +143,14 @@ func IntType() {
 	println(v2)
 
 	/** uintptr 用于指针运行时使用；底层编程时用到 */
-	}
+}
 
 
 /**
  *  数组是固定长度的，是僵化的类型，一般很少使用
 	数组式值类型的，当做参数传递时，将执行复制
+
+	语法：长度写在前边
  */
 func Array() {
 	array := [32]byte {1,2,3}

@@ -30,7 +30,7 @@ from invoke import task, call, Collection, Responder
     invoke build -nabc
 '''
 
-if 0:
+if 1:
     @task(help={'name': "name of the build"})
     def build(c, name):
         print("build with name "+ name)
@@ -45,7 +45,7 @@ if 0:
         pre/post、autoprint
 '''
 
-if 0:
+if 1:
     ''' pre/post
         调用build时自动执行；他们也可以单独执行
         必须在build之前定义
@@ -152,7 +152,7 @@ if 1:
         ns.configure({'sphinx': {'target': "built_docs"}})
         这里有个通过配置文件，设置task默认参数的例子
 '''
-if 0:
+if 1:
     @task()
     def release(c):
         print("release  -- have another name")
@@ -178,7 +178,7 @@ if 0:
     # 名字空间中加入其它名字空间, invoke newname.release
     ns.add_collection(child, "newname")
 
-if 0:
+if 1:
     ''' 通过导入的 module 建立名字空间
         http://docs.pyinvoke.org/en/latest/concepts/loading.html
 
@@ -203,7 +203,7 @@ if 0:
         http://docs.pyinvoke.org/en/latest/api/runners.html#invoke.runners.Runner.run
 '''
 
-if 0:
+if 1:
     @task
     def dircheck(c):
         with c.cd('/var/www'):
