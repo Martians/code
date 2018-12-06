@@ -8,7 +8,7 @@ def build(c, name):
     print("build with name "+ name)
     c.run("ls /etc/hosts")
 
-@task
+@task(default=True)
 def build2(c, name):
     print("build with name "+ name)
     c.run("ls /etc/hosts")

@@ -27,25 +27,7 @@ test_just = None
 test_save = None
 
 ########################################################################################################################
-def filter_multi(value):
-    '''
-        如果是搜索多行，首先将\n替换为其他字符
-        方法1：
-            1. 多行情况下，grep得到整个文本数据，所以这里设置 show = 0
-            2. a为标签；一次读取两行，替换其中的\n；只要发现\n就继续跳转到标签
 
-        方法2：
-            1. 代码：
-                base = 'N; ' * value.count('\n') - 1
-                command = "sed -n '{base} /{key}{sep}{value}/p' {file}".format(base=base, file=file, key=key, sep=sep, value=value.replace('\n', '\\n'))
-            2. 但该方法比较脆弱，容易出错
-                成功：sed -n 'N; N;  /data_file_directories: \n    - \/mnt\/disk1\n    - \/mnt\/disk2/p' tempfile
-                失败：sed -n 'N; N; N; /data_file_directories: \n    - \/mnt\/disk1\n    - \/mnt\/disk2\n    - \/mnt\/disk3/p' tempfile
-    '''
-    convert = 'NNN'
-    value = value.replace('\n', convert)
-    filter = "| sed ':a; N; s/\\n/{convert}/g; ta;'".format(convert=convert)
-    return value, filter
 
 def grep_line(file, key=None):
     ''' 找到 key所在的行号
@@ -66,16 +48,21 @@ def grep_line(file, key=None):
     else:
         return -1, None
 
-def grep_data(c, key, file=None, value=None, sep=' ', show=0, mute=False, cache=None, prefix='[^#]*', suffix=''):
+
+def grep_data(c, key, file=None, value=None, sep=' ',
+              cache=None, show=0, mute=False,
+              prefix='[^#]*', suffix=''):
     '''
-        检查 key [sep value] 在文件中是否存在
+        使用grep，检查 key [sep value] 在文件中是否存在
+
     参数：
         1. 定位：
-            sep、prefix（默认：确保该行不是被注释掉的部分）、suffix
+            sep：key和value之间
+            prefix、suffix：prefix（默认：确保该行不是被注释掉的部分）
 
         2. 显示：
             1. show: grep时显示多少行数据，该数据用于后续分析等；
-            2. mute：是否显示这些结果到屏幕，还是只保存在 result返回值中
+            2. mute：是否显示这些结果到屏幕，还是只保存在 result 返回值中
 
         3. 其他
             1. 上下文：cache，使用 test_just，或者需要在一个内存数据中搜索时
@@ -133,6 +120,26 @@ def grep_data(c, key, file=None, value=None, sep=' ', show=0, mute=False, cache=
     if show > 0 and not mute:
         print(result.stdout, end='')
     return result.ok, result
+
+def filter_multi(value):
+    '''
+        如果是搜索多行，首先将\n替换为其他字符
+        方法1：
+            1. 多行情况下，grep得到整个文本数据，所以这里设置 show = 0
+            2. a为标签；一次读取两行，替换其中的\n；只要发现\n就继续跳转到标签
+
+        方法2：
+            1. 代码：
+                base = 'N; ' * value.count('\n') - 1
+                command = "sed -n '{base} /{key}{sep}{value}/p' {file}".format(base=base, file=file, key=key, sep=sep, value=value.replace('\n', '\\n'))
+            2. 但该方法比较脆弱，容易出错
+                成功：sed -n 'N; N;  /data_file_directories: \n    - \/mnt\/disk1\n    - \/mnt\/disk2/p' tempfile
+                失败：sed -n 'N; N; N; /data_file_directories: \n    - \/mnt\/disk1\n    - \/mnt\/disk2\n    - \/mnt\/disk3/p' tempfile
+    '''
+    convert = 'NNN'
+    value = value.replace('\n', convert)
+    filter = "| sed ':a; N; s/\\n/{convert}/g; ta;'".format(convert=convert)
+    return value, filter
 
 ########################################################################################################################
 @task
@@ -359,7 +366,7 @@ if 1:
         if clear:
             test_save.clear()
     ##########################################################################
-    if 0:
+    if 1:
         # 这里的测试不修改文件，只是内存中修改
         test_just = True
 
