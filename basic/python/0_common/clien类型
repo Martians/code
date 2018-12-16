@@ -1,0 +1,30 @@
+	clien类型
+	    1. useThin：访问端口与normal client不同，默认10800
+	         服务配置：<property name="peerClassLoadingEnabled" value="true"/>
+	                 不需要专门配置端口，默认已经启动了监听的端口
+	         服务启动：直接 bin/ignite.sh即可
+
+		2. normal：可以指定配置文件，或者通过程序配置
+			文件方式
+				配置：examples/config/example-cache.xml 作为模板，修改ip地址
+				启动：bin/ignite.sh examples/config/example-cache.xml
+		
+			程序方式：
+				配置：可以添加 <property name="peerClassLoadingEnabled" value="true"/>
+	     		启动：bin/ignite.sh examples/config/example-ignite.xml
+
+	分离融合（normal模式下，client、server是否在一起）
+     	1. 分离模式
+     		 1）client模式：client=true, 本地不启动server，数据发送到远端server
+             2）远端服务启动：bin/ignite.sh examples/config/example-cache.xml
+ 
+     	2. 融合模式：
+     		 1）server模式：client=false，本地启动server和client，数据存储在本地测试
+             2）注意：需要关闭远端服务器，否则本地server会和远端server组成集群
+
+        测试时，使用 normal客户端，程序方式配置
+        bin/ignite.sh examples/config/example-ignite.xml
+实现：
+使用：
+     1. 本地测试：
+     2. 远端测试：， 本地指启动client
