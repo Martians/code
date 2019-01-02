@@ -9,3 +9,5 @@ b.test()
 
 import sys
 print(sys.path)
+
+abc=1000

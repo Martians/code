@@ -29,7 +29,6 @@ d = dict(name='11', qq=43)
 print(d)
 
 
-
 ###############################################################################################
 ''' 日常访问
 '''
@@ -165,3 +164,22 @@ print(a)
 ls = [1, 2, 3, 4, 5, 4, 3, 2, 1]
 print(list(set(ls)))
 
+
+class dynamic(dict):
+    """
+        属性访问访问字典
+        https://www.jianshu.com/p/edfa99a72a02
+    """
+    def __init__(self, *args, **kw):
+        dict.__init__(self, *args, **kw)
+
+    def __setattr__(self, k, v):
+        self[k] = v
+
+    def __getattr__(self, k):
+        return self.get(k)
+
+bb = dynamic()
+bb.a = 1
+print(bb.d)
+print(bb.a)
