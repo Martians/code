@@ -40,5 +40,6 @@ else
 			git ci -m "fix"
 		fi
 		git push origin master:master
+		# result=`git push origin master:master 2>&1 | tee -`
 	fi
 fi
