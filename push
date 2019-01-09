@@ -1,8 +1,8 @@
 #!/bin/sh
 
 git_modify() {
-	result = 'git st -s'
-	if [ $result ]; then
+	result='git st -s'
+	if [[ $result ]]; then
 		echo "git modify"
 		return 1
 	else
@@ -24,7 +24,7 @@ git_push() {
 	echo "3"
 }
 
-if [ git_modify ]; then
+if git_modify; then
 	echo "11"
 fi	
 
