@@ -1,2 +1,2 @@
 # code
-Learning example
+Learning examples
