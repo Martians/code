@@ -29,7 +29,7 @@ git_cache() {
 	return $?
 }
 
-# 发生了修改、加入到cache、尚未push
+# 所有情况：发生了修改、加入到cache、尚未push
 git_commit() {
 	git diff origin/master --quiet
 	return $?
