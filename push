@@ -1,5 +1,13 @@
 #!/bin/sh
 
+result=a
+if [[ "$result" != "" ]]; then
+	echo "git modify"
+else
+	echo "nithong"
+fi
+exit 0
+
 git_modify() {
 	result='git st -s'
 	if [[ "$result" != "" ]]; then
