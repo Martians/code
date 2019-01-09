@@ -1,13 +1,5 @@
 #!/bin/sh
 
-# result=a
-# if [[ "$result" != "" ]]; then
-# 	echo "git modify"
-# else
-# 	echo "nithong"
-# fi
-# exit 0
-
 # 发生了修改、加入到cache
 # 		if [ "`git st -s`" ];
 git_modify() {
@@ -30,19 +22,11 @@ git_cache() {
 }
 
 # 所有情况：发生了修改、加入到cache、尚未push
+#		git diff origin/master --quiet
 git_commit() {
 	git diff origin/master --quiet
 	return $?
 }
-
-git_push() {
-	echo "3"
-}
-
-if git_cache; then
-	echo "11"
-fi	
-
 
 exit 0
 # not in code dir; $1 used for prevent from endless loop 
