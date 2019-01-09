@@ -15,9 +15,6 @@
 # # 加入到cache
 # git_cache() {
 # 	git diff --cached --quiet
-# 	if $?; then
-# 		echo "git cached"
-# 	fi
 # 	return $?
 # }
 
