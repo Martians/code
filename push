@@ -34,6 +34,7 @@ if [ -e ../code/push ] && ! [[ `pwd` =~ .*code$ ]] && [[ $1 != 1 ]]; then
 else
 	# 1) some data in cache 2) change commit, but have not pushed
 	if !(git diff origin/master --quiet); then
+		# only commit when needed
 		if [ "`git st -s`" ]; then
 			git add -A .
 			git ci -m "fix"
