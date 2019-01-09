@@ -1,5 +1,35 @@
 #!/bin/sh
 
+git_modify() {
+	result = 'git st -s'
+	if [ $result ]; then
+		echo "git modify"
+		return 1
+	else
+		return 0
+	fi
+}
+
+git_cache() {
+	git diff --cached --quiet
+	return $?
+}
+
+git_commit() {
+	git diff origin/master --quiet
+	return $?
+}
+
+git_push() {
+	echo "3"
+}
+
+if [ git_modify ]; then
+	echo "11"
+fi	
+
+
+exit 0
 # not in code dir; $1 used for prevent from endless loop 
 if [ -e ../code/push ] && ! [[ `pwd` =~ .*code$ ]] && [[ $1 != 1 ]]; then
 	sh ../code/push 1
