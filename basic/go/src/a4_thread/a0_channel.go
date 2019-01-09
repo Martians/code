@@ -13,7 +13,7 @@ import (
 ## 特性
 	channel 只能传递一种值，是一种类型安全的管道
 	是可以比较的，如果是相同的channel
-	只有一个操作符 <-； <- chann、chann <-
+	只有一个操作符 <-  可以使用： <- chann、chann <-
 
 ## 使用
 	close 之后拒绝写入 channel，关闭一个channels还会触发一个广播机制
