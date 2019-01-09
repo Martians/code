@@ -9,6 +9,7 @@
 # exit 0
 
 # 发生了修改、加入到cache
+# 		if [ "`git st -s`" ];
 git_modify() {
 	result=`git st -s`
 	if [[ "$result" != "" ]]; then
@@ -28,6 +29,7 @@ git_cache() {
 	return $?
 }
 
+# 发生了修改、加入到cache、尚未push
 git_commit() {
 	git diff origin/master --quiet
 	return $?
