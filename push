@@ -9,8 +9,7 @@
 # exit 0
 
 git_modify() {
-	result='git st -s'
-	echo "$result"
+	result=`git st -s`
 	if [[ "$result" != "" ]]; then
 		echo "git modify"
 		return 1
