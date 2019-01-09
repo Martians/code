@@ -8,18 +8,23 @@
 # fi
 # exit 0
 
+# 发生了修改、加入到cache
 git_modify() {
 	result=`git st -s`
 	if [[ "$result" != "" ]]; then
 		echo "git modify"
-		return 1
-	else
 		return 0
+	else
+		return 1
 	fi
 }
 
+# 加入到cache
 git_cache() {
 	git diff --cached --quiet
+	if $?; then
+		echo "git cached"
+	fi
 	return $?
 }
 
@@ -32,7 +37,7 @@ git_push() {
 	echo "3"
 }
 
-if git_modify; then
+if git_cache; then
 	echo "11"
 fi	
 
