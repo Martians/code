@@ -64,6 +64,7 @@ func bigSlowOperation() {
 
 /**
  * 调试技巧：一个语句，同时打印输入输出
+		在外部函数中，只调用一次，但是在外部函数退出时回自动执行计时
  */
 func trace(msg string) func() {
 	start := time.Now()

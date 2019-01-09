@@ -4,7 +4,7 @@ import "fmt"
 
 func Condition() {
 	/**
-	 * if 之后可以放至多一个，用于进行赋值，但必须用短变量声明方式（否则要使用var关键字了）
+	 * if 之后可以放至多一个，用于进行赋值，但必须用短变量声明方式（:= 否则要使用var关键字了）
 			可以利用语法上的便利，给多个变量赋值
 	 */
 	x := 10
@@ -30,7 +30,8 @@ func Example(x int) int {
 }
 
 /**
- * 不需要break
+ * 	case 一行可以写多个值
+	不需要break
  */
 func Switch() {
 	i := 2

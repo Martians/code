@@ -18,7 +18,7 @@ func CopyFile(dst, src string) (w int64, err error) {
 		return
 	}
 	defer srcFile.Close()
-	dstFile, err := os.Create(dstName)
+	dstFile, err := os.Create(dst)
 	if err != nil {
 		return
 	}
