@@ -1,5 +1,7 @@
 package com.data.a3_collection
 
+import scala.collection.mutable.ListBuffer
+
 /**
   * list是immutable类型，对应于mutable的array、ListBuffer
   *
@@ -175,7 +177,9 @@ object a2_list {
       *     2. 代码中的递归不是尾递归时，为了避免栈溢出，用 for + ListBuffer 替代 List 递归
       */
     def operate_listbuffer() = {
-
+        val a = ListBuffer(1,2,3,4,5,6,7,8,9)
+        a += 5
+        print(a)
     }
 
     def main(args: Array[String]): Unit = {
