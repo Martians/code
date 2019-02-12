@@ -8,6 +8,8 @@ import (
 
 /**
  *
+	https://www.jianshu.com/p/24ede9e90490
+
 	Blog：https://blog.golang.org/pipelines
 
 ## 特性
@@ -17,18 +19,20 @@ import (
 
 ## 使用
 	close 之后拒绝写入 channel，关闭一个channels还会触发一个广播机制
-		关闭操作只用于断言不再向channel发送新，只有发送完之后才会调用
-		只接受的channel调用close是错误
+		关闭操作只用于断言不再向channel发送新值，只有发送完之后才会调用
+		对只接收的channel调用close是错误
  */
 
 /**
-* select 的每个语句，必须是IO操作
-*/
+ * select 的每个语句，必须是IO操作
+ */
 func Select() {
 	count := 0
 	ch := make(chan int, 1)
 	for {
-		/** 这里是随机写入 0、1？ */
+		/** 这里是随机写入 0、1
+		 *  	select时如果有多个 case 通过，则随机挑选一个 case 执行
+		 */
 		select {
 		case ch <- 0:
 		case ch <- 1:
