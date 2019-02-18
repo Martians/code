@@ -63,6 +63,9 @@ var (
 	sema = make(chan struct{}, 1) // a binary semaphore guarding balance
 	balance int
 )
+/**
+ * 通过无法写入，来进行阻塞
+ */
 func ChannelSync(amount int) {
 	sema <- struct{}{} // acquire token
 	balance = balance + amount

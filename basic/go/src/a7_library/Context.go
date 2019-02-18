@@ -19,6 +19,10 @@ import (
 	"time"
 )
 
+/**
+ *  子线程执行，定时输出信号
+	主线程结束时，子线程收到信号，也会进行关闭
+ */
 func WithCancel() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -28,7 +32,7 @@ func WithCancel() {
 		for {
 			select {
 			case <- ctx.Done():
-				fmt.Println("parent done, child exit")
+				fmt.Println("WithCancel：parent done, child exit")
 				return
 			default:
 				fmt.Println("child work")
@@ -44,6 +48,8 @@ func WithCancel() {
 }
 
 func WithTimeout() {
+	fmt.Println("WithTimeout")
+
 	ctx, cancel := context.WithTimeout(context.Background(), 3 * time.Second)
 	defer cancel()
 
@@ -52,7 +58,7 @@ func WithTimeout() {
 		for {
 			select {
 			case <- ctx.Done():
-				fmt.Println("parent done, child exit")
+				fmt.Println("WithTimeout：parent done, child exit")
 				return
 			/**
 				这里注释的三行代码，可以打开，可以关闭

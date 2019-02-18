@@ -7,7 +7,7 @@ import (
 
 func TestClass(t *testing.T) {
 
-	// ContextHandle()
+	ContextHandle()
 
 	JsonHandle()
 
