@@ -40,4 +40,6 @@
 
 没有自增运算
 
+python 没有switch
+java只有一个返回值
 '''
